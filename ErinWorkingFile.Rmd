@@ -4,10 +4,8 @@ output: html_document
 date: "2023-11-13"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, echo=FALSE, message=FALSE}
 
-#testing
 ```
 
 ## R Markdown
