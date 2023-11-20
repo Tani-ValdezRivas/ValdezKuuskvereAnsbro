@@ -1,5 +1,5 @@
 ---
-title: "Erin"
+title: "Cleaning Data"
 output: html_document
 date: "2023-11-13"
 ---
@@ -32,7 +32,7 @@ Nitrogen$Time <- as.factor(Nitrogen$Time)
 You can also embed plots, for example:
 
 ```{r Summary}
-summary(Nitrogen)
+write.csv(Nitrogen, row.names=TRUE, file=here('Data', 'Processed', 'Nitrogen_Processed.csv'))
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
