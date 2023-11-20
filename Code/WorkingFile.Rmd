@@ -5,6 +5,15 @@ date: "2023-11-13"
 ---
 
 ```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+library(here)
+library(tidyverse)
+library(lubridate)
+
+setwd("C:/Users/eka19/OneDrive - Duke University/Documents/872/ValdezKuuskvereAnsbro")
+
+#Nitrogen <-read.csv("./Data/Raw/Surge_Uptake _Data_Pulse_Duration_with_replicate_bladess.csv")
+
+
 
 ```
 
