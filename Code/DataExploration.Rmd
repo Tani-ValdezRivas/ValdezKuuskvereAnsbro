@@ -4,6 +4,7 @@ output: html_document
 date: "2023-11-13"
 ---
 
+# Creating library
 ```{r setup, include=FALSE, echo=FALSE, message=FALSE}
 # Reading in the libraries 
 library(tidyverse)
@@ -17,7 +18,7 @@ library(here)
 here()
 ```
 
-
+# Site Locations
 ```{r setup, include=FALSE, echo=FALSE, message=FALSE}
 
 # Mapping the locations of the study sites
@@ -43,6 +44,11 @@ Surge_Reef_sf <- Site_information %>%
 # Making a map of the study sites
 Surge_Reef_Map <- mapView(Surge_Reef_sf, layer.name = 'Reef Site locations')
 Surge_Reef_Map
+
+```
+
+# Boxplot of range and means of each component of the data set
+```{r}
 
 ```
 

@@ -18,7 +18,7 @@ output: html_document
 library(here)
 here()
 
-# Load your packages
+# Loading packages
 library(tidyverse)
 library(lubridate)
 library(cowplot)
@@ -26,6 +26,9 @@ library(sf)
 library(leaflet)
 library(mapview); mapviewOptions(fgb = FALSE)
 
+# Reading in the data
+SurgeUptakeNitrogen <-
+  read.csv(here('Data','Processed','Nitrogen_Processed.csv'), stringsAsFactors=TRUE)
 
 # Set your ggplot theme
 
@@ -47,7 +50,6 @@ We are interested in trends in giant kelp nitrogen surge uptake by season and by
 3. Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
 
 
-
 \newpage
 
 # Dataset Information
@@ -58,6 +60,34 @@ We are interested in trends in giant kelp nitrogen surge uptake by season and by
 
 # Exploratory Analysis 
 
+The Map shows the sampling sites of nitrogen uptake along the coast of California
+```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+
+# Mapping the locations of the study sites
+
+# Creating a dataframe of the locations
+Site_Name <- c("Mohawk Reef", "Arroyo Quemado Reef", "Arroyo Burro Reef")
+Longitude <- c("-119.7295", "-120.11905", "-119.7445915	")
+Latitude <- c("34.3940708", "34.46774988", "34.400275")
+
+Site_information <- data.frame(Site_Name, Longitude, Latitude)
+
+# Changing Site Name, Longitude, Latitude to factors and numerics
+Site_information$Site_Name <- as.factor(Site_information$Site_Name)
+Site_information$Longitude <- as.numeric(Site_information$Longitude)
+Site_information$Latitude <- as.numeric(Site_information$Latitude)
+
+
+# Converting the dataframe into a spatial reference frame
+Surge_Reef_sf <- Site_information %>% 
+  st_as_sf(coords = c('Longitude','Latitude'),
+           crs=4326)
+
+# Making a map of the study sites
+Surge_Reef_Map <- mapView(Surge_Reef_sf, layer.name = 'Reef Site locations')
+Surge_Reef_Map
+
+```
 
 
 \newpage
@@ -66,11 +96,25 @@ We are interested in trends in giant kelp nitrogen surge uptake by season and by
 
 
 
-## Question 1: <insert specific question here and add additional subsections for additional questions below, if needed>
+## Question 1: Does giant kelp nitrogen and ammonia surge uptake vary per spring and summer season?
 
-## Question 2: 
+```{r}
 
-## Question 3:
+```
+
+
+## Question 2:  Does giant kelp nitrogen and ammonia surge uptake vary based on the amount of exposure?
+
+```{r}
+
+```
+
+
+## Question 3: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
+
+```{r}
+
+```
 
 
 \newpage

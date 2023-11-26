@@ -5,7 +5,50 @@ date: "2023-11-13"
 ---
 
 
+```{r setup, include=FALSE}
+
+# Set your working directory
+library(here)
+here()
+
+# Loading packages
+library(tidyverse)
+library(lubridate)
+library(cowplot)
+library(sf)
+library(leaflet)
+library(mapview); mapviewOptions(fgb = FALSE)
+
+
+# Reading in the data
+SurgeUptakeNitrogen <-
+  read.csv(here('Data','Processed','Nitrogen_Processed.csv'), stringsAsFactors=TRUE)
+```
+
+
+# Question 1: Does giant kelp nitrogen and ammonia surge uptake vary per spring and summer season?
+
 ```{r}
+
+```
+
+# Question 2: Does giant kelp nitrogen and ammonia surge uptake vary based on the amount of exposure?
+
+```{r}
+
+```
+
+# Question 3: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
+
+
+```{r}
+# Creating a ggplot to compare uptake of various types of nitrogen
+
+NitrogenUptaketype <- 
+  ggplot(SurgeUptakeNitrogen, aes(x = Uptake_Rate, y = Nitrogen_Types)) +
+  geom_point()
+
+NitrogenUptaketype
 
 ```
 
