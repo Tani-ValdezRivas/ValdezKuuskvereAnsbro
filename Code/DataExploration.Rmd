@@ -1,0 +1,48 @@
+---
+title: "Data Exploration"
+output: html_document
+date: "2023-11-13"
+---
+
+```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+# Reading in the libraries 
+library(tidyverse)
+library(lubridate)
+library(sf)
+library(leaflet)
+library(mapview); mapviewOptions(fgb = FALSE)
+
+# Checking project directory
+library(here)
+here()
+```
+
+
+```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+
+# Mapping the locations of the study sites
+
+# Creating a dataframe of the locations
+Site_Name <- c("Mohawk Reef", "Arroyo Quemado Reef", "Arroyo Burro Reef")
+Longitude <- c("-119.7295", "-120.11905", "-119.7445915	")
+Latitude <- c("34.3940708", "34.46774988", "34.400275")
+
+Site_information <- data.frame(Site_Name, Longitude, Latitude)
+
+# Changing Site Name, Longitude, Latitude to factors and numerics
+Site_information$Site_Name <- as.factor(Site_information$Site_Name)
+Site_information$Longitude <- as.numeric(Site_information$Longitude)
+Site_information$Latitude <- as.numeric(Site_information$Latitude)
+
+
+# Converting the dataframe into a spatial reference frame
+Surge_Reef_sf <- Site_information %>% 
+  st_as_sf(coords = c('Longitude','Latitude'),
+           crs=4326)
+
+# Making a map of the study sites
+Surge_Reef_Map <- mapView(Surge_Reef_sf, layer.name = 'Reef Site locations')
+Surge_Reef_Map
+
+```
+
