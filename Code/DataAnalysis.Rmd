@@ -45,6 +45,7 @@ NitrogenSeasonBox <-
   labs(title="Nitrogen Uptake Rate by Season", x="Season", y="Nitrogen Uptake Rate (V(hr1))")
 
 print(NitrogenSeasonBox)
+ggsave(file=here('Output', 'Analysis','NitrogenSeasonBox.png'), width = 10, height = 10, units = "cm")
 
 #BiomassSeasonBox <- 
 #  ggplot(Season, aes(x = Biomass_Uptake, y = Season)) +
@@ -61,6 +62,7 @@ NitrogenSeasonPoint <-
 
 
 print(NitrogenSeasonPoint)
+ggsave(file=here('Output', 'Analysis','NitrogenSeasonPoint.png'), width = 10, height = 10, units = "cm")
 
 #BiomassSeasonPoint <- 
 #  ggplot(Season, aes(x = DayReplicate, y = Biomass_Uptake, color=Season)) +
@@ -76,6 +78,7 @@ NitrogenSeasonBox2 <-
  labs(title="Nitrogen Uptake Rate by Types and Season", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
 
 print(NitrogenSeasonBox2)
+ggsave(file=here('Output', 'Analysis','NitrogenSeasonBox2.png'), width = 10, height = 10, units = "cm")
 ```
 ```{r Season LM}
 SeasonLM <-lm(data = Season, Uptake_Rate~Season)
@@ -116,6 +119,7 @@ NitrogenTimeBox <-
   labs(title="Nitrogen Uptake Rate by Exposure Length", x="Exposure Length (mins)", y="Nitrogen Uptake Rate (V(hr1))")
 
 print(NitrogenTimeBox)
+ggsave(file=here('Output', 'Analysis','NitrogenTimeBox.png'), width = 10, height = 10, units = "cm")
 
 #BiomassTimeBox <- 
 #  ggplot(ExposureLength, aes(x = Time, y = Biomass_Uptake) +
@@ -132,6 +136,7 @@ NitrogenTimePointbyDay <-
 
 
 print(NitrogenTimePointbyDay)
+ggsave(file=here('Output', 'Analysis','NitrogenTimePointbyDay.png'), width = 10, height = 10, units = "cm")
 
 #BiomassTimePoint <- 
 #  ggplot(ExposureLength, aes(x = Day_Replicate, y = Biomass_Uptake, color=Time)) +
@@ -147,6 +152,7 @@ NitrogenTimePointbyType <-
  labs(title="Nitrogen Uptake Rate by Types and Exposure Length", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
 
 print(NitrogenTimePointbyType)
+ggsave(file=here('Output', 'Analysis','NitrogenTimePointbyType.png'), width = 10, height = 10, units = "cm")
 ```
 ```{r Q2 Time LM}
 TimeLM <-lm(data = ExposureLength, Uptake_Rate~Time)
@@ -178,7 +184,7 @@ NitrogenUptaketype <-
   geom_boxplot() +
   labs(title="Uptake Rate by Nitrogen Type", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
 print(NitrogenUptaketype)
-
+ggsave(file=here('Output', 'Analysis','NitrogenUptaketype.png'), width = 10, height = 10, units = "cm")
 # Creating a ggplot to compare biomass uptake of various types of nitrogen
 
 NitrogenBiomassUptake <- 
@@ -186,6 +192,7 @@ NitrogenBiomassUptake <-
   geom_boxplot() +
   labs(title="Biomass Uptake Rate by Nitrogen Type", x="Nitrogen Types", y="Biomass Uptake Rate (µg/g/min)")
 print(NitrogenBiomassUptake)
+ggsave(file=here('Output', 'Analysis','NitrogenBiomassUptake.png'), width = 10, height = 10, units = "cm")
 
 # Creating a ggplot to compare how nitrogen uptake varies per day per nitrogen type
 NitrogenDayUptake <-
@@ -205,7 +212,7 @@ NitrogenDayUptake <-
       # y="Nitrogen Uptake Rate (V(hr1))", color = "Nitrogen Types")
 
 print(NitrogenDayUptake)
-  
+ggsave(file=here('Output', 'Analysis','NitrogenDayUptake.png'), width = 10, height = 10, units = "cm")
 
 ```
 
