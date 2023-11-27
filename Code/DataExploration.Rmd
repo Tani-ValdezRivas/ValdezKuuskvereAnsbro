@@ -20,9 +20,11 @@ here()
 # Reading in the data
 Nitrogen_Processed <-read.csv(here('Data','Processed','Nitrogen_Processed.csv'), stringsAsFactors=TRUE)
 
+#Create and set theme 
 mytheme <- theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 theme_set(mytheme)
 
+#Verifying data attributes
 Nitrogen_Processed$Time <- as.factor(Nitrogen_Processed$Time)
 Nitrogen_Processed$Blade_Replicate <- as.factor(Nitrogen_Processed$Blade_Replicate)
 Nitrogen_Processed$Day_Replicate <- as.factor(Nitrogen_Processed$Day_Replicate)
