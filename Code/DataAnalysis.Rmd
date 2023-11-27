@@ -100,7 +100,70 @@ TukeyHSD(DurationAOV)
 
 # Question 2: Does giant kelp nitrogen and ammonia surge uptake vary based on the amount of exposure?
 
-```{r}
+```{r Q2 Exposure Length Plots}
+ExposureLength <- SurgeUptakeNitrogen %>%
+  mutate(Day_Replicate = as.factor(Day_Replicate))%>%
+  mutate(Time = as.factor(Time))
+
+
+ExposureLength$Season <-factor(Season$Season, labels = c("Spring", "Summer"))
+ExposureLength$Nitrogen_Types<-factor(Season$Nitrogen_Types, labels= c("Ammonium", "Nitrate", "Urea"))
+
+
+NitrogenTimeBox <- 
+  ggplot(ExposureLength, aes(x = Time, y = Uptake_Rate)) +
+  geom_boxplot()+
+  labs(title="Nitrogen Uptake Rate by Exposure Length", x="Exposure Length (mins)", y="Nitrogen Uptake Rate (V(hr1))")
+
+print(NitrogenTimeBox)
+
+#BiomassTimeBox <- 
+#  ggplot(ExposureLength, aes(x = Time, y = Biomass_Uptake) +
+#  geom_boxplot()+
+#  xlab("Biomass Uptake Rate")
+
+#print(BiomassTimeBox)
+
+
+NitrogenTimePointbyDay <- 
+  ggplot(ExposureLength, aes(x = Day_Replicate, y = Uptake_Rate, color=Time)) +
+  geom_point(alpha=.6)+
+  labs(title="Nitrogen Uptake Rate by Day and Exposure Length", x="Days", y="Nitrogen Uptake Rate (V(hr1))")
+
+
+print(NitrogenTimePointbyDay)
+
+#BiomassTimePoint <- 
+#  ggplot(ExposureLength, aes(x = Day_Replicate, y = Biomass_Uptake, color=Time)) +
+#  geom_point()+
+#  xlab("Days of Study")+
+#  ylab("Biomass Uptake Rate")
+
+#print(BiomassTimePoint)
+
+NitrogenTimePointbyType <- 
+  ggplot(ExposureLength, aes(x = Nitrogen_Types, y = Uptake_Rate, color=Time)) +
+ geom_point()+
+ labs(title="Nitrogen Uptake Rate by Types and Exposure Length", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
+
+print(NitrogenTimePointbyType)
+```
+```{r Q2 Time LM}
+TimeLM <-lm(data = ExposureLength, Uptake_Rate~Time)
+summary(TimeLM)
+
+TimeAOV <- aov(data=ExposureLength, Uptake_Rate~Time)
+summary(TimeAOV)
+
+
+TimeNitrogenAIC <- lm(data=ExposureLength, Uptake_Rate~Time+Nitrogen_Types+Season)
+step(TimeNitrogenAIC)
+
+
+TimeDurationAOV <- aov(data=ExposureLength, Uptake_Rate~Time)
+summary(TimeDurationAOV)
+
+TukeyHSD(TimeDurationAOV)
 
 ```
 
