@@ -63,7 +63,7 @@ Surge_Reef_Map
 ```{r}
 UptakeRateBoxbyType <- ggplot(Nitrogen_Processed) +
   geom_boxplot(aes(x = Nitrogen_Types, y = Uptake_Rate))+
-  labs(title="Uptake Rate by Nitrogen Type")
+  labs(title="Uptake Rate (V(hr1)) by Nitrogen Type")
 UptakeRateBoxbyType
 
 BiomassBoxbyType <- ggplot(Nitrogen_Processed) +
@@ -73,7 +73,7 @@ BiomassBoxbyType
 
 UptakeRateBoxbySeason <- ggplot(Nitrogen_Processed) +
   geom_boxplot(aes(x = Season, y = Uptake_Rate))+
-  labs(title="Uptake Rate by Season")
+  labs(title="Uptake Rate (V(hr1)) by Season")
 UptakeRateBoxbySeason
 
 BiomassBoxbySeason <- ggplot(Nitrogen_Processed) +
@@ -83,7 +83,7 @@ BiomassBoxbySeason
 
 UptakeRateBoxbyTime <- ggplot(Nitrogen_Processed) +
   geom_boxplot(aes(x = Time, y = Uptake_Rate))+
-  labs(title="Uptake Rate by Length of Exposure")
+  labs(title="Uptake Rate (V(hr1)) by Length of Exposure")
 UptakeRateBoxbyTime
 
 BiomassBoxbyTime <- ggplot(Nitrogen_Processed) +
@@ -93,7 +93,7 @@ BiomassBoxbyTime
 
 UptakeRateBoxbyDayRep <- ggplot(Nitrogen_Processed) +
   geom_boxplot(aes(x = Day_Replicate, y = Uptake_Rate))+
-  labs(title="Uptake Rate by Day Replicate")
+  labs(title="Uptake Rate (V(hr1)) by Day Replicate")
 UptakeRateBoxbyDayRep
 
 BiomassBoxbyDayRep <- ggplot(Nitrogen_Processed) +
@@ -103,7 +103,7 @@ BiomassBoxbyDayRep
 
 UptakeRateBoxbyBladeRep <- ggplot(Nitrogen_Processed) +
   geom_boxplot(aes(x = Blade_Replicate, y = Uptake_Rate))+
-  labs(title="Uptake Rate by Blade Replicate")
+  labs(title="Uptake Rate (V(hr1)) by Blade Replicate")
 UptakeRateBoxbyBladeRep
 
 BiomassBoxbyBladeRep <- ggplot(Nitrogen_Processed) +
@@ -116,7 +116,7 @@ BiomassBoxbyBladeRep
 ```{r}
 UptakeRateViolinbyType <- ggplot(Nitrogen_Processed) +
   geom_violin(aes(x = Nitrogen_Types, y = Uptake_Rate))+
-  labs(title="Uptake Rate by Nitrogen Type")
+  labs(title="Uptake Rate (V(hr1)) by Nitrogen Type")
 UptakeRateViolinbyType
 
 BiomassViolinbyType <- ggplot(Nitrogen_Processed) +
@@ -126,7 +126,7 @@ BiomassViolinbyType
 
 UptakeRateViolinbySeason <- ggplot(Nitrogen_Processed) +
   geom_violin(aes(x = Season, y = Uptake_Rate))+
-  labs(title="Uptake Rate by Season")
+  labs(title="Uptake Rate (V(hr1)) by Season")
 UptakeRateViolinbySeason
 
 BiomassViolinbySeason <- ggplot(Nitrogen_Processed) +
@@ -136,7 +136,7 @@ BiomassViolinbySeason
 
 UptakeRateViolinbyTime <- ggplot(Nitrogen_Processed) +
   geom_violin(aes(x = Time, y = Uptake_Rate))+
-  labs(title="Uptake Rate by Length of Exposure")
+  labs(title="Uptake Rate (V(hr1)) by Length of Exposure")
 UptakeRateViolinbyTime
 
 BiomassViolinbyTime <- ggplot(Nitrogen_Processed) +
@@ -146,7 +146,7 @@ BiomassViolinbyTime
 
 UptakeRateViolinbyDayRep <- ggplot(Nitrogen_Processed) +
   geom_violin(aes(x = Day_Replicate, y = Uptake_Rate))+
-  labs(title="Uptake Rate by Day Replicate")
+  labs(title="Uptake Rate (V(hr1)) by Day Replicate")
 UptakeRateViolinbyDayRep
 
 BiomassViolinbyDayRep <- ggplot(Nitrogen_Processed) +
@@ -156,7 +156,7 @@ BiomassViolinbyDayRep
 
 UptakeRateViolinbyBladeRep <- ggplot(Nitrogen_Processed) +
   geom_violin(aes(x = Blade_Replicate, y = Uptake_Rate))+
-  labs(title="Uptake Rate by Blade Replicate")
+  labs(title="Uptake Rate (V(hr1)) by Blade Replicate")
 UptakeRateViolinbyBladeRep
 
 BiomassViolinbyBladeRep <- ggplot(Nitrogen_Processed) +
