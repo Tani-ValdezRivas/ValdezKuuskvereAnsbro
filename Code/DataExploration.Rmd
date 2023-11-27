@@ -113,7 +113,7 @@ BiomassBoxbyBladeRep
 ```
 
 # Violins of range and means of each component of the data set
-```{r}
+```{r Violins}
 UptakeRateViolinbyType <- ggplot(Nitrogen_Processed) +
   geom_violin(aes(x = Nitrogen_Types, y = Uptake_Rate))+
   labs(title="Uptake Rate (V(hr1)) by Nitrogen Type")
@@ -163,6 +163,8 @@ BiomassViolinbyBladeRep <- ggplot(Nitrogen_Processed) +
   geom_violin(aes(x = Blade_Replicate, y = Biomass_Uptake))+
   labs(title= "Biomass Uptake by Blade Replicate")
 BiomassViolinbyBladeRep
+
+
 ```
 
 
