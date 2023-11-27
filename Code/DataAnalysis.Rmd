@@ -25,11 +25,77 @@ SurgeUptakeNitrogen <-
   read.csv(here('Data','Processed','Nitrogen_Processed.csv'), stringsAsFactors=TRUE)
 ```
 
-
-# Question 1: Does giant kelp nitrogen and ammonia surge uptake vary per spring and summer season?
+#Need to explain uptake rate calculation
+# Question 1: Does giant kelp nitrogen surge uptake vary per spring and summer season?
 
 ```{r}
 
+Season <- SurgeUptakeNitrogen %>%
+  mutate(DayReplicate = as.factor(Day_Replicate))%>%
+  mutate(NewTime = as.factor(Time))
+
+
+Season$Season <-factor(Season$Season, labels = c("Spring", "Summer"))
+Season$Nitrogen_Types<-factor(Season$Nitrogen_Types, labels= c("Ammonium", "Nitrate", "Urea"))
+
+
+NitrogenSeasonBox <- 
+  ggplot(Season, aes(x = Season, y = Uptake_Rate)) +
+  geom_boxplot()+
+  labs(title="Nitrogen Uptake Rate by Season", x="Season", y="Nitrogen Uptake Rate (V(hr1))")
+
+print(NitrogenSeasonBox)
+
+#BiomassSeasonBox <- 
+#  ggplot(Season, aes(x = Biomass_Uptake, y = Season)) +
+#  geom_boxplot()+
+#  xlab("Biomass Uptake Rate")
+
+#print(BiomassSeasonBox)
+
+
+NitrogenSeasonPoint <- 
+  ggplot(Season, aes(x = DayReplicate, y = Uptake_Rate, color=Season)) +
+  geom_point(alpha=.6)+
+  labs(title="Nitrogen Uptake Rate by Day and Season", x="Days", y="Nitrogen Uptake Rate (V(hr1))")
+
+
+print(NitrogenSeasonPoint)
+
+#BiomassSeasonPoint <- 
+#  ggplot(Season, aes(x = DayReplicate, y = Biomass_Uptake, color=Season)) +
+#  geom_point()+
+#  xlab("Days of Study")+
+#  ylab("Biomass Uptake Rate")
+
+#print(BiomassSeasonPoint)
+
+NitrogenSeasonBox2 <- 
+  ggplot(Season, aes(x = Nitrogen_Types, y = Uptake_Rate, color=Season)) +
+ geom_boxplot()+
+ labs(title="Nitrogen Uptake Rate by Types and Season", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
+
+print(NitrogenSeasonBox2)
+```
+```{r Season LM}
+SeasonLM <-lm(data = Season, Uptake_Rate~Season)
+summary(SeasonLM)
+
+SeasonAOV <- aov(data=Season, Uptake_Rate~Season)
+summary(SeasonAOV)
+
+
+NitrogenAIC <- lm(data=Season, Uptake_Rate~Season+Nitrogen_Types+NewTime)
+step(NitrogenAIC)
+
+#really for uptake duration, not season
+DurationAOV <- aov(data=Season, Uptake_Rate~NewTime)
+summary(DurationAOV)
+
+TukeyHSD(DurationAOV)
+
+#NitrogenTukey<- HSD.test(DurationAOV, "Time", group=TRUE)
+#print(NitrogenTukey)
 ```
 
 # Question 2: Does giant kelp nitrogen and ammonia surge uptake vary based on the amount of exposure?
