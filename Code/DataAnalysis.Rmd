@@ -126,9 +126,10 @@ print(NitrogenBiomassUptake)
 
 # Creating a ggplot to compare how nitrogen uptake varies per day per nitrogen type
 NitrogenDayUptake <-
-  ggplot(SurgeUptakeNitrogen, aes(x = Nitrogen_Types, y = Uptake_Rate, color = Day_Replicate)) +
+  ggplot(Season, aes(x = Nitrogen_Types, y = Uptake_Rate, color = DayReplicate)) +
   geom_jitter(alpha = 0.5) +
-  labs(title="Nitrogen Uptake per day for each type", 
+  scale_color_manual(values = c("#FF0000", "#BF003F", "#7F007F", "#3F00BF", "#0000FF"))+
+  labs(title="Nitrogen Uptake per Day for Each Nitrogen Type", 
        x="Nitrogen Types", 
        y="Nitrogen Uptake Rate (V(hr1))", color = "Day")
 
