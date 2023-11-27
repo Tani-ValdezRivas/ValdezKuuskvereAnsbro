@@ -106,15 +106,42 @@ TukeyHSD(DurationAOV)
 
 # Question 3: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
 
-
 ```{r}
+
 # Creating a ggplot to compare uptake of various types of nitrogen
 
 NitrogenUptaketype <- 
-  ggplot(SurgeUptakeNitrogen, aes(x = Uptake_Rate, y = Nitrogen_Types)) +
-  geom_point()
+  ggplot(SurgeUptakeNitrogen, aes(x = Nitrogen_Types, y = Uptake_Rate)) +
+  geom_boxplot() +
+  labs(title="Uptake Rate by Nitrogen Type", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
+print(NitrogenUptaketype)
 
-NitrogenUptaketype
+# Creating a ggplot to compare biomass uptake of various types of nitrogen
+
+NitrogenBiomassUptake <- 
+  ggplot(SurgeUptakeNitrogen, aes(x = Nitrogen_Types, y = Biomass_Uptake)) +
+  geom_boxplot() +
+  labs(title="Biomass Uptake Rate by Nitrogen Type", x="Nitrogen Types", y="Biomass Uptake Rate (µg/g/min)")
+print(NitrogenBiomassUptake)
+
+# Creating a ggplot to compare how nitrogen uptake varies per day per nitrogen type
+NitrogenDayUptake <-
+  ggplot(SurgeUptakeNitrogen, aes(x = Nitrogen_Types, y = Uptake_Rate, color = Day_Replicate)) +
+  geom_jitter(alpha = 0.5) +
+  labs(title="Nitrogen Uptake per day for each type", 
+       x="Nitrogen Types", 
+       y="Nitrogen Uptake Rate (V(hr1))", color = "Day")
+
+# or
+# NitrogenDayUptake <-
+  #ggplot(SurgeUptakeNitrogen, aes(x = Day_Replicate, y = Uptake_Rate, color = Nitrogen_Types)) +
+  #geom_point(alpha = 0.5) +
+  #labs(title="Nitrogen Uptake per day for each type", 
+      #x="Day", 
+      # y="Nitrogen Uptake Rate (V(hr1))", color = "Nitrogen Types")
+
+print(NitrogenDayUptake)
+  
 
 ```
 
