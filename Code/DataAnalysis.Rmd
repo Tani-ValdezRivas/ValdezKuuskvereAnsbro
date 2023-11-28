@@ -2,6 +2,8 @@
 title: "Data Analysis"
 output: html_document
 date: "2023-11-13"
+editor_options: 
+  chunk_output_type: inline
 ---
 
 
@@ -213,6 +215,21 @@ NitrogenDayUptake <-
 
 print(NitrogenDayUptake)
 ggsave(file=here('Output', 'Analysis','NitrogenDayUptake.png'), width = 10, height = 10, units = "cm")
+
+```
+
+```{r Q3 LM}
+
+NitorgenLM <-lm(data = SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types)
+summary(NitorgenLM)
+
+NitrogenAOV <- aov(data = SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types)
+summary(NitrogenAOV)
+TukeyHSD(NitrogenAOV)
+
+NitrogenTypeAIC <- lm(data=SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types+Season+Time)
+step(NitrogenTypeAIC)
+
 
 ```
 
