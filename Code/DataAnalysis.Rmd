@@ -229,7 +229,12 @@ TukeyHSD(NitrogenAOV)
 
 NitrogenTypeAIC <- lm(data=SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types+Season+Time)
 step(NitrogenTypeAIC)
+summary(NitrogenTypeAIC)
 
+# For biomass
+BiomassTypeAIC <- lm(data=SurgeUptakeNitrogen, Biomass_Uptake~Nitrogen_Types+Season+Time)
+step(NitrogenTypeAIC)
+summary(NitrogenTypeAIC)
 
 ```
 
