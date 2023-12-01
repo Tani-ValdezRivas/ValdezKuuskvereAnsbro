@@ -219,13 +219,16 @@ ggsave(file=here('Output', 'Analysis','NitrogenDayUptake.png'), width = 10, heig
 ```
 
 ```{r Q3 LM}
-
+# Generalized Linear Model (GLM)
 NitorgenLM <-lm(data = SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types)
 summary(NitorgenLM)
 
+# One-way ANOVA
 NitrogenAOV <- aov(data = SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types)
 summary(NitrogenAOV)
 TukeyHSD(NitrogenAOV)
+
+# AIC-based Model Selection:
 
 NitrogenTypeAIC <- lm(data=SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types+Season+Time)
 step(NitrogenTypeAIC)
