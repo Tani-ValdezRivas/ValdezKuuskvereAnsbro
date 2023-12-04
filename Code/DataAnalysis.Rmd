@@ -17,6 +17,7 @@ here()
 library(tidyverse)
 library(lubridate)
 library(cowplot)
+library(agricolae)
 library(sf)
 library(leaflet)
 library(mapview); mapviewOptions(fgb = FALSE)
@@ -63,14 +64,27 @@ par(mfrow = c(1,1))
 
 
 #4. Scatter plot
-NitrogenRegressionDate2 <- lm(data = NitrogenYears, log(Nitrogen_Percent) ~ Date)
-summary(NitrogenRegressionDate2)
-
 nitrogenbydate <- ggplot(NitrogenYears, aes(x=Date, y=Nitrogen_Percent))+
   geom_point()+
   geom_smooth(method="lm")
 
+#why is geomsmooth not showing up?
+#how to get less dates on the x axis?
 print(nitrogenbydate)
+
+#5. Tukey
+NitrogenDateAOV <- aov(data = NitrogenYears, Nitrogen_Percent ~Date)
+summary(NitrogenDateAOV)
+
+TukeyHSD(NitrogenDateAOV)
+
+NitrogenDateTotals <- HSD.test(NitrogenDateAOV, "Year", group =TRUE)
+NitrogenDateTotals
+
+NitrogenYears$Year <- as.factor(NitrogenYears$Year)
+NitrogrenPlot <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
+  geom_boxplot()
+print(NitrogrenPlot)
 ```
 
 
