@@ -94,7 +94,6 @@ Surge_Reef_sf <- Site_information %>%
 # Making a map of the study sites
 Surge_Reef_Map <- mapView(Surge_Reef_sf, layer.name = 'Reef Site locations')
 Surge_Reef_Map
-
 ```
 
 
