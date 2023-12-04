@@ -43,13 +43,25 @@ Nitrogen$Nitrogen_Types<-factor(Nitrogen$Nitrogen_Types, labels= c("Ammonium", "
 ```{r Data Cleaning for Nitrogen Years}
 
 # Re-naming the column name
-colnames(NitrogenYears) <-c("Sample_Number", "Year", "Month", "Date","Site","Number_of_Samples","Sample_Replicate","Wet_Weight","Dry_Weight", "Ratio_Dry_to_Wet", "Analytical_Dry_Weight", "Carbon_%", "Hydrogen_%", "Nitrogen_%", "Carbon_Nitrogen_Ratio", "Notes")
+colnames(NitrogenYears) <-c("Sample_Number", "Year", "Month", "Date","Site","Number_of_Samples","Sample_Replicate","Wet_Weight","Dry_Weight", "Ratio_Dry_to_Wet", "Analytical_Dry_Weight", "Carbon_Percent", "Hydrogen_Percent", "Nitrogen_Percent", "Carbon_Nitrogen_Ratio", "Notes")
 
 #Changing Date from factor to date
 NitrogenYears$Date <- as.Date(NitrogenYears$Date, format = "%m/%d/%Y")
 
 #Removing sites with missing values
 NitrogenYears <- subset(NitrogenYears, NitrogenYears$Sample_Number>0)
+
+summary(NitrogenYears$Site) 
+
+#Updating Site Names so thre are no extra spaces at the end
+NitrogenYears <-NitrogenYears %>%
+  mutate(NewSites = as.factor(str_squish(Site)))
+
+summary(NitrogenYears$NewSites)
+
+#Renaming Site Names to full length names
+NitrogenYears$NewSites <-factor(NitrogenYears$NewSites, labels= c("Arroyo Burro","Arroyo Quemado" , "Mohawk"))
+
 
 ```
 

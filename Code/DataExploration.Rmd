@@ -19,6 +19,7 @@ here()
 
 # Reading in the data
 Nitrogen_Processed <-read.csv(here('Data','Processed','Nitrogen_Processed.csv'), stringsAsFactors=TRUE)
+NitrogenYears_Processed <-read.csv(here('Data','Processed','NitrogenYears_Processed.csv'), stringsAsFactors=TRUE)
 
 #Create and set theme 
 mytheme <- theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
@@ -187,4 +188,22 @@ ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyBladeRep.png'), width
 
 ```
 
+#Exploring Notrogen by Years Data
+```{r}
+summary(NitrogenYears_Processed)
+
+summary(NitrogenYears_Processed$Nitrogen_Percent)
+
+NitrogenYears_Point <- ggplot(NitrogenYears_Processed, aes(x=Year, y=Nitrogen_Percent))+
+  geom_point(alpha=.5)+
+  labs(title="Nitrogen Percent by Year", x="Date", y="Nitrogen Percent")
+
+print(NitrogenYears_Point)
+
+NitrogenYears_Box <- ggplot(NitrogenYears_Processed, aes(x=NewSites, y=Nitrogen_Percent))+
+  geom_boxplot()+
+  labs(title="Nitrogen Percent by Site", x="Site", y="Nitrogen Percent")
+
+print(NitrogenYears_Box)
+```
 
