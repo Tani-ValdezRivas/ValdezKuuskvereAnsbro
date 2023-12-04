@@ -85,6 +85,9 @@ NitrogenYears$Year <- as.factor(NitrogenYears$Year)
 NitrogrenPlot <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
   geom_boxplot()
 print(NitrogrenPlot)
+
+#6. Season Plot #average the months
+Season <- ggplot(NitrogenYears, aes(X=))
 ```
 
 
