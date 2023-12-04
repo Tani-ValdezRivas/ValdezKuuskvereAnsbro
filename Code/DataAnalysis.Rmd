@@ -13,6 +13,8 @@ editor_options:
 library(here)
 here()
 
+install.packages("forcats")
+
 # Loading packages
 library(tidyverse)
 library(lubridate)
@@ -21,6 +23,7 @@ library(agricolae)
 library(sf)
 library(leaflet)
 library(mapview); mapviewOptions(fgb = FALSE)
+library(forcats)
 
 
 # Reading in the data
@@ -82,9 +85,9 @@ NitrogenDateTotals <- HSD.test(NitrogenDateAOV, "Year", group =TRUE)
 NitrogenDateTotals
 
 NitrogenYears$Year <- as.factor(NitrogenYears$Year)
-NitrogrenPlot <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
+NitrogenPlot <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
   geom_boxplot()
-print(NitrogrenPlot)
+print(NitrogenPlot)
 
 #6. Season Plot #average the months
 Season <- ggplot(NitrogenYears, aes(X=))
@@ -150,6 +153,42 @@ Nitrogen_Monthly_MK <- Kendall::MannKendall(Nitrogen_NoSeasonal)
 
 Nitrogen_Monthly_MK
 summary(Nitrogen_Monthly_MK)
+```
+```{r}
+#More month stuff
+
+NitrogenYears$Month <- factor(NitrogenYears$Month, levels = c(1,2,3,4,5,6,7,8,9,10,11,12),labels =c(  
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",  
+    "Oct", "Nov", "Dec") )
+
+NitrogenYears <- NitrogenYears %>%
+  mutate(SeasonNames = fct_collapse(Month,
+    "Spring" = month.abb[3:5],
+    "Summer" = month.abb[6:8],
+    "Fall" = month.abb[9:11],
+    "Winter" = month.abb[c(12,1,2)]))
+
+NitrogenSeasonPlot <- ggplot(NitrogenYears, aes(x=SeasonNames, y=Nitrogen_Percent))+
+  geom_boxplot()
+print(NitrogenSeasonPlot)
+
+NitrogenRegressionSeason <- lm(NitrogenYears$Nitrogen_Percent ~ NitrogenYears$SeasonNames)
+#Linear regression on the nitrogen percent amount by year. P-value is less than .05. Which means there is significant difference. Residual standard error is small at .75 on 1280 degrees of freedom. However, year only explains 5% of nitrogen percent amount. 
+summary(NitrogenRegressionSeason)
+
+NitrogenRegressionMonth <- lm(NitrogenYears$Nitrogen_Percent ~ NitrogenYears$Month)
+summary(NitrogenRegressionMonth)
+
+
+#3. Normal Distribution
+par(mfrow = c(2,2), mar=c(2,2,2,2))
+plot(NitrogenRegressionSeason)
+par(mfrow = c(1,1))
+
+#Residuals v fitted, looking for symmetry. There is symmetry, and the line is fairly flat. There a re feww observations that are far off from the red line. Lowewr and higher ends do deviate from the Q-Q Residuals. Scale-location, there is very little symmetry with respects to the red line. Residuals vs Leverage, values outside dashed line show there are outliers. 
+
+
+
 ```
 
 
