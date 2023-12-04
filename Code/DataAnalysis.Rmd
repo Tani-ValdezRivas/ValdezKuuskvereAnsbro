@@ -25,22 +25,49 @@ library(mapview); mapviewOptions(fgb = FALSE)
 # Reading in the data
 SurgeUptakeNitrogen <-
   read.csv(here('Data','Processed','Nitrogen_Processed.csv'), stringsAsFactors=TRUE)
+
+NitrogenYears <-read.csv(here('Data','Processed','NitrogenYears_Processed.csv'), stringsAsFactors=TRUE)
 ```
 
+# Question 1: Does giant kelp nitrogen percent vary over year or season?
+
+H0 : There is no significant difference of nitrogen percent over the past twenty years.
+HA : There is significant difference of nitrogen percent over the past twenty years.
+
+Prior to conducting this analysis, it was identified that nitrogen percent did not seem to visually change over the years. To get a better understanding..... 
+```{r}
+#1. LM for year
+NitrogenRegressionYear <- lm(NitrogenYears$Nitrogen_Percent ~ NitrogenYears$Date)
+#Linear regression on the nitrogen percent amount by year. P-value is less than .05. Which means there is significant difference. Residual standard error is small at .75 on 1280 degrees of freedom. However, year only explains 5% of nitrogen percent amount. 
+summary(NitrogenRegressionYear)
+#Correlation
+cor.test(NitrogenYears$Nitrogen_Percent, NitrogenYears$Year)
+#Running correlation test, the correlation score is -.202. So there is a negative correlation. So a somewhat weak correlation
+
+
+#2. LM for Date
+NitrogenRegressionDate <- lm(NitrogenYears$Nitrogen_Percent ~ NitrogenYears$Date)
+
+#Linear regression on the nitrogen percent amount by year. P-value is less than .05. Which means there is significant difference. Residual standard error is small at .1648 on 728 degrees of freedom. Date explains 97.4% of nitrogen percent amount. 
+summary(NitrogenRegressionDate)
+
+#can't run corr because it is a date
+#cor.test(NitrogenYears$Nitrogen_Percent, NitrogenYears$Date)
+
+#3. Normal Distribution
+par(mfrow = c(2,2), mar=c(2,2,2,2))
+plot(NitrogenRegressionDate)
+par(mfrow = c(1,1))
+
+#Residuals v fitted, looking for symmetry. There is symmetry, and the line is fairly flat. There a re feww observations that are far off from the red line. Lowewr and higher ends do deviate from the Q-Q Residuals. Scale-location, there is very little symmetry with respects to the red line. Residuals vs Leverage, values outside dashed line show there are outliers. 
+```
+
+
+# Question 2: Does giant kelp nitrogen surge uptake vary per spring and summer season?
 #Need to explain uptake rate calculation
-# Question 1: Does giant kelp nitrogen surge uptake vary per spring and summer season?
+
 
 ```{r}
-
-Season <- SurgeUptakeNitrogen %>%
-  mutate(DayReplicate = as.factor(Day_Replicate))%>%
-  mutate(NewTime = as.factor(Time))
-
-
-Season$Season <-factor(Season$Season, labels = c("Spring", "Summer"))
-Season$Nitrogen_Types<-factor(Season$Nitrogen_Types, labels= c("Ammonium", "Nitrate", "Urea"))
-
-
 NitrogenSeasonBox <- 
   ggplot(Season, aes(x = Season, y = Uptake_Rate)) +
   geom_boxplot()+
@@ -103,7 +130,7 @@ TukeyHSD(DurationAOV)
 #print(NitrogenTukey)
 ```
 
-# Question 2: Does giant kelp nitrogen and ammonia surge uptake vary based on the amount of exposure?
+# Question 3: Does giant kelp nitrogen surge uptake vary based on the amount of exposure?
 
 ```{r Q2 Exposure Length Plots}
 ExposureLength <- SurgeUptakeNitrogen %>%
@@ -175,7 +202,7 @@ TukeyHSD(TimeDurationAOV)
 
 ```
 
-# Question 3: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
+# Question 4: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
 
 ```{r}
 
