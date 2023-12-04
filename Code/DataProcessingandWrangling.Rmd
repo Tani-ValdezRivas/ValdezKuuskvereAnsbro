@@ -14,6 +14,8 @@ here()
 
 # Reading in the data
 Nitrogen <-read.csv(here('Data','Raw','Surge_Uptake_Data_Pulse_Duration_with_replicate_blades.csv'), stringsAsFactors=TRUE)
+
+NitrogenYears <-read.csv(here('Data','Raw','CHN_Field_all_years_20211006.csv'), stringsAsFactors=TRUE)
 ```
 
 ## R Markdown
@@ -22,25 +24,42 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r Data Cleaning}
+#The data for nitrogen uptake was cleaned by renaming the column names to be better understood by the public. Multiple columns including columns for Blade Replicate, Day Replicate, Time, Season, and Nitrogen Type were changed to factors. Season and Nitrogen Type also had labels added to capitalize the names of seasons and nitrgoen types. 
+
+```{r Data Cleaning for Nitrogen}
 
 # Re-naming the column name
 colnames(Nitrogen) <-c("Nitrogen_Types", "Season", "Day_Replicate", "Time","Blade_Replicate","Uptake_Rate","Biomass_Uptake","Nitrogen_Final_%","Nitrogen_Initial_%")
 
-# Changing Blade replicate, Day replicate, and time to factors
+# Changing Blade replicate, Day replicate, time, seaon, and nitrgoen types to factors
 Nitrogen$Blade_Replicate <- as.factor(Nitrogen$Blade_Replicate)
 Nitrogen$Day_Replicate <- as.factor(Nitrogen$Day_Replicate)
 Nitrogen$Time <- as.factor(Nitrogen$Time)
+Nitrogen$Season <- factor(Nitrogen$Season, labels = c("Spring", "Summer"))
+Nitrogen$Nitrogen_Types<-factor(Nitrogen$Nitrogen_Types, labels= c("Ammonium", "Nitrate", "Urea"))
 ```
 
-## Including Plots
+#Data cleaning for the dtata for nitrogren data over years was cleaned y renaming column names as well. Date was changed from a factor to a date data type. Sites with missing values were also removed. 
+```{r Data Cleaning for Nitrogen Years}
 
-You can also embed plots, for example:
+# Re-naming the column name
+colnames(NitrogenYears) <-c("Sample_Number", "Year", "Month", "Date","Site","Number_of_Samples","Sample_Replicate","Wet_Weight","Dry_Weight", "Ratio_Dry_to_Wet", "Analytical_Dry_Weight", "Carbon_%", "Hydrogen_%", "Nitrogen_%", "Carbon_Nitrogen_Ratio", "Notes")
 
-```{r Summary}
+#Changing Date from factor to date
+NitrogenYears$Date <- as.Date(NitrogenYears$Date, format = "%m/%d/%Y")
+
+#Removing sites with missing values
+NitrogenYears <- subset(NitrogenYears, NitrogenYears$Sample_Number>0)
+
+```
+
+
+```{r Clean Data}
 
 # Outputting the processed data
 write.csv(Nitrogen, row.names=TRUE, file=here('Data', 'Processed', 'Nitrogen_Processed.csv'))
+
+write.csv(NitrogenYears, row.names=TRUE, file=here('Data', 'Processed', 'NitrogenYears_Processed.csv'))
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
