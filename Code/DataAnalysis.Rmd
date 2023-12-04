@@ -88,6 +88,68 @@ print(NitrogrenPlot)
 
 #6. Season Plot #average the months
 Season <- ggplot(NitrogenYears, aes(X=))
+
+
+
+```
+```{r}
+#6. Season Plot #average the months
+Nitrogen.monthly.preliminary <- NitrogenYears %>%
+  mutate(CleanDate = my(paste0(Month,"-",Year)))
+
+Nitrogen.monthly <-aggregate(Nitrogen.monthly.preliminary$Nitrogen_Percent,  
+                                  by=list(Nitrogen.monthly.preliminary$CleanDate),  
+                                  FUN=mean)
+
+colnames(Nitrogen.monthly) <- c("Date", "Mean_NitrogenPercent")
+
+#7. 
+# Generate time series daily
+#f_monthdaily <- month(first(NitrogenYears$Date))
+#f_yeardaily <- year(first(NitrogenYears$Date))
+
+#Nitrogen.daily.ts <- ts(NitrogenYears$Nitrogen_Percent,
+ #                            start=c(f_yeardaily,f_monthdaily),
+  #                           frequency=365)
+
+# Generate time series monthly
+f_monthmonthly <- month(first(Nitrogen.monthly$Date))
+f_yearmonthly <- year(first(Nitrogen.monthly$Date))
+
+Nitrogen.monthly.ts <- ts(Nitrogen.monthly$Mean_NitrogenPercent,
+                   start=c(f_yearmonthly,f_monthmonthly),
+                   frequency=12) 
+
+#Decompose monthly
+Nitrogen.monthly.ts.decomp <- stl(Nitrogen.monthly.ts,s.window = "periodic")
+plot(Nitrogen.monthly.ts.decomp)
+
+#12 Run SMK test monthly
+Nitrogen_Monthly_SMK <- Kendall::SeasonalMannKendall(Nitrogen.monthly.ts)
+
+Nitrogen_Monthly_SMK
+summary(Nitrogen_Monthly_SMK)
+
+# 13 Visualization
+Nitrogen_Plot <-
+ggplot(Nitrogen.monthly, aes(x = Date, y = Mean_NitrogenPercent)) +
+  geom_point() +
+  geom_line() +
+  ylab("Mean Nitrogen (percent)") +
+  geom_smooth( method = lm )
+
+print(Nitrogen_Plot)
+
+#taking out seasonal
+NitrogenComponents <- as.data.frame(Nitrogen.monthly.ts.decomp$time.series[,1:3])
+
+Nitrogen_NoSeasonal <-NitrogenComponents$trend+NitrogenComponents$remainder
+
+#16 Run MK test monthly
+Nitrogen_Monthly_MK <- Kendall::MannKendall(Nitrogen_NoSeasonal)
+
+Nitrogen_Monthly_MK
+summary(Nitrogen_Monthly_MK)
 ```
 
 
