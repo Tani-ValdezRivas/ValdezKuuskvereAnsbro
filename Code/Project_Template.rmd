@@ -2,18 +2,19 @@
 title: "Trends in giant kelp nitrogen surge uptake"
 author: "Erin Ansbro, Cara Kuuskvere, Tani Valdez Rivas"
 date: "December 2023"
-output: html_document
-
+output: 
+  html_document:
+    toc: true
 ---
 \newpage
-\tableofcontents 
+\tableofcontents
 \newpage
 \listoftables 
 \newpage
 \listoffigures 
 \newpage
 
-```{r setup, include=FALSE}
+```{r include=FALSE}
 # Set your working directory
 library(here)
 here()
@@ -22,6 +23,7 @@ here()
 library(tidyverse)
 library(lubridate)
 library(cowplot)
+library(knitr)
 library(sf)
 library(leaflet)
 library(mapview); mapviewOptions(fgb = FALSE)
@@ -45,16 +47,22 @@ Interested in this recent research, data about nitrogen uptake was located in th
 
 We are interested in trends in giant kelp nitrogen surge uptake by season and by the amount of exposure. Specific questions include:
 
-1. Does giant kelp nitrogen and ammonia surge uptake vary per spring and summer season?
-2. Does giant kelp nitrogen and ammonia surge uptake vary based on the amount of exposure?
+1. Does giant kelp nitrogen surge uptake vary per spring and summer season?
+2. Does giant kelp nitrogen surge uptake vary based on the amount of exposure?
 3. Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
+
+Github Information: https://github.com/Tani-ValdezRivas/ValdezKuuskvereAnsbro
 
 
 \newpage
 
 # Dataset Information
 
+Data sets were found on the Environmental Data Initiative. All sets were from the Santa Barbara Coastal Long Term Ecological Research Site (SBC LTER) which is based  within the University of California, Santa Barbara (UCSB) Marine Science Institute, and is part of the National Science Foundation's LTER Network. 
 
+Data Set 1:
+
+Data Set 2:
 
 \newpage
 
