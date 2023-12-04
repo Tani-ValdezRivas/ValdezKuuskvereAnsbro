@@ -60,6 +60,17 @@ plot(NitrogenRegressionDate)
 par(mfrow = c(1,1))
 
 #Residuals v fitted, looking for symmetry. There is symmetry, and the line is fairly flat. There a re feww observations that are far off from the red line. Lowewr and higher ends do deviate from the Q-Q Residuals. Scale-location, there is very little symmetry with respects to the red line. Residuals vs Leverage, values outside dashed line show there are outliers. 
+
+
+#4. Scatter plot
+NitrogenRegressionDate2 <- lm(data = NitrogenYears, log(Nitrogen_Percent) ~ Date)
+summary(NitrogenRegressionDate2)
+
+nitrogenbydate <- ggplot(NitrogenYears, aes(x=Date, y=Nitrogen_Percent))+
+  geom_point()+
+  geom_smooth(method="lm")
+
+print(nitrogenbydate)
 ```
 
 
