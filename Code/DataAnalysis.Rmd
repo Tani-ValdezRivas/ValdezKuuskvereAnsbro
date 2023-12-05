@@ -39,7 +39,7 @@ H0 : There is no significant difference of nitrogen percent over the past twenty
 HA : There is significant difference of nitrogen percent over the past twenty years.
 
 Prior to conducting this analysis, it was identified that nitrogen percent did not seem to visually change over the years. To get a better understanding..... 
-```{r}
+```{r Q1}
 #1. LM for year
 NitrogenRegressionYear <- lm(NitrogenYears$Nitrogen_Percent ~ NitrogenYears$Date)
 #Linear regression on the nitrogen percent amount by year. P-value is less than .05. Which means there is significant difference. Residual standard error is small at .75 on 1280 degrees of freedom. However, year only explains 5% of nitrogen percent amount. 
@@ -154,7 +154,7 @@ Nitrogen_Monthly_MK <- Kendall::MannKendall(Nitrogen_NoSeasonal)
 Nitrogen_Monthly_MK
 summary(Nitrogen_Monthly_MK)
 ```
-```{r}
+```{r Q1 cont.}
 #More month stuff
 
 NitrogenYears$Month <- factor(NitrogenYears$Month, levels = c(1,2,3,4,5,6,7,8,9,10,11,12),labels =c(  
@@ -194,7 +194,10 @@ par(mfrow = c(1,1))
 
 # Question 2: Does giant kelp nitrogen surge uptake vary per spring and summer season?
 #Need to explain uptake rate calculation
+H0 : There is no significant difference of nitrogen surge uptake between spring and summer seasons.
+HA : There is significant difference of nitrogen surge uptake between spring and summer seasons.
 
+The metadata indicates that the giant kelp blades studied were collected during the nitrate replete spring and the nitrate-deplete summer. The five replicate experiments were conducted in both spring and summer of 2019, which allows us to find potential differences in the nitrogen surge uptake of the two populations. The experimenters calculate uptake rate using a modified version of an equation by Legendre and Grosselin (1997) V= (nt - n0)/[t(ds-d0)] where nt is the atom percentage of Nitrogen-15 in the blade after incubation; n0 is the average concentration of isotope in the control blades; ds is the atom percentage of Nitrogen-15 in the seawater at the start of the incubation; d0 is the atom percentage of Nitrogen-15 in the nitrate pool before isotope tracer was added; and t is the length of the incubation time in minutes. 
 
 ```{r}
 NitrogenSeasonBox <- 
@@ -203,7 +206,7 @@ NitrogenSeasonBox <-
   labs(title="Nitrogen Uptake Rate by Season", x="Season", y="Nitrogen Uptake Rate (V(hr1))")
 
 print(NitrogenSeasonBox)
-ggsave(file=here('Output', 'Analysis','NitrogenSeasonBox.png'), width = 10, height = 10, units = "cm")
+#ggsave(file=here('Output', 'Analysis','NitrogenSeasonBox.png'), width = 10, height = 10, units = #"cm")
 
 #BiomassSeasonBox <- 
 #  ggplot(Season, aes(x = Biomass_Uptake, y = Season)) +
@@ -214,13 +217,13 @@ ggsave(file=here('Output', 'Analysis','NitrogenSeasonBox.png'), width = 10, heig
 
 
 NitrogenSeasonPoint <- 
-  ggplot(SurgeUptakeNitrogen, aes(x = Day_Replicate, y = Uptake_Rate, color=Season)) +
-  geom_point(alpha=.6)+
+  ggplot(SurgeUptakeNitrogen, aes(x = Day_Replicate, y = Uptake_Rate, shape=Season)) +
+  geom_point(alpha=.2)+
   labs(title="Nitrogen Uptake Rate by Day and Season", x="Days", y="Nitrogen Uptake Rate (V(hr1))")
 
 
 print(NitrogenSeasonPoint)
-ggsave(file=here('Output', 'Analysis','NitrogenSeasonPoint.png'), width = 10, height = 10, units = "cm")
+#ggsave(file=here('Output', 'Analysis','NitrogenSeasonPoint.png'), width = 10, height = 10, units = #"cm")
 
 #BiomassSeasonPoint <- 
 #  ggplot(Season, aes(x = DayReplicate, y = Biomass_Uptake, color=Season)) +
@@ -236,7 +239,7 @@ NitrogenSeasonBox2 <-
  labs(title="Nitrogen Uptake Rate by Types and Season", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
 
 print(NitrogenSeasonBox2)
-ggsave(file=here('Output', 'Analysis','NitrogenSeasonBox2.png'), width = 10, height = 10, units = "cm")
+#ggsave(file=here('Output', 'Analysis','NitrogenSeasonBox2.png'), width = 10, height = 10, units = #"cm")
 ```
 ```{r Season LM}
 SurgeUptakeNitrogen$Time <- as.factor(SurgeUptakeNitrogen$Time)
@@ -256,14 +259,18 @@ DurationAOV <- aov(data=SurgeUptakeNitrogen, Uptake_Rate~Time)
 summary(DurationAOV)
 
 TukeyHSD(DurationAOV)
+TukeyHSD(SeasonAOV)
 
 #NitrogenTukey<- HSD.test(DurationAOV, "Time", group=TRUE)
 #print(NitrogenTukey)
 ```
 
 # Question 3: Does giant kelp nitrogen surge uptake vary based on the amount of exposure?
-
-```{r Q2 Exposure Length Plots}
+H0 : There is no significant difference of nitrogen surge uptake between 
+different exposure lengths.
+HA : There is significant difference of nitrogen surge uptake between different
+exposure lengths.
+```{r Q3 Exposure Length Plots}
 ExposureLength <- SurgeUptakeNitrogen %>%
   mutate(Day_Replicate = as.factor(Day_Replicate))%>%
   mutate(Time = as.factor(Time))
@@ -290,8 +297,8 @@ ggsave(file=here('Output', 'Analysis','NitrogenTimeBox.png'), width = 10, height
 
 
 NitrogenTimePointbyDay <- 
-  ggplot(ExposureLength, aes(x = Day_Replicate, y = Uptake_Rate, color=Time)) +
-  geom_point(alpha=.6)+
+  ggplot(ExposureLength, aes(x = Day_Replicate, y = Uptake_Rate, shape=Time)) +
+  geom_point(alpha=.2)+
   labs(title="Nitrogen Uptake Rate by Day and Exposure Length", x="Days", y="Nitrogen Uptake Rate (V(hr1))")
 
 
@@ -307,14 +314,14 @@ ggsave(file=here('Output', 'Analysis','NitrogenTimePointbyDay.png'), width = 10,
 #print(BiomassTimePoint)
 
 NitrogenTimePointbyType <- 
-  ggplot(ExposureLength, aes(x = Nitrogen_Types, y = Uptake_Rate, color=Time)) +
- geom_point()+
+  ggplot(ExposureLength, aes(x = Nitrogen_Types, y = Uptake_Rate, shape=Time)) +
+ geom_point(alpha=.2)+
  labs(title="Nitrogen Uptake Rate by Types and Exposure Length", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
 
 print(NitrogenTimePointbyType)
 ggsave(file=here('Output', 'Analysis','NitrogenTimePointbyType.png'), width = 10, height = 10, units = "cm")
 ```
-```{r Q2 Time LM}
+```{r Q3 Time LM}
 TimeLM <-lm(data = ExposureLength, Uptake_Rate~Time)
 summary(TimeLM)
 
@@ -334,8 +341,10 @@ TukeyHSD(TimeDurationAOV)
 ```
 
 # Question 4: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
+H0 : There is no significant difference of nitrogen surge uptake of different nitrogen types.
+HA : There is significant difference of nitrogen surge uptake between different nitrogen types.
 
-```{r}
+```{r Q4}
 
 # Creating a ggplot to compare uptake of various types of nitrogen
 
@@ -357,7 +366,7 @@ ggsave(file=here('Output', 'Analysis','NitrogenBiomassUptake.png'), width = 10, 
 # Creating a ggplot to compare how nitrogen uptake varies per day per nitrogen type
 NitrogenDayUptake <-
   ggplot(Season, aes(x = Nitrogen_Types, y = Uptake_Rate, color = DayReplicate)) +
-  geom_jitter(alpha = 0.5) +
+  geom_jitter(alpha = 0.2) +
   scale_color_manual(values = c("#FF0000", "#BF003F", "#7F007F", "#3F00BF", "#0000FF"))+
   labs(title="Nitrogen Uptake per Day for Each Nitrogen Type", 
        x="Nitrogen Types", 
@@ -376,7 +385,7 @@ ggsave(file=here('Output', 'Analysis','NitrogenDayUptake.png'), width = 10, heig
 
 ```
 
-```{r Q3 LM}
+```{r Q4 LM}
 # Generalized Linear Model (GLM)
 NitorgenLM <-lm(data = SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types)
 summary(NitorgenLM)
