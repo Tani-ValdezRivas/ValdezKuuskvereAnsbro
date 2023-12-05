@@ -33,8 +33,20 @@ SurgeUptakeNitrogen <-
   read.csv(here('Data','Processed','Nitrogen_Processed.csv'), stringsAsFactors=TRUE)
 
 # Set your ggplot theme
+#Create and set theme 
+mytheme <- theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+theme_set(mytheme)
 
 # Load your datasets
+SurgeUptakeNitrogen <-
+  read.csv(here('Data','Processed','Nitrogen_Processed.csv'), stringsAsFactors=TRUE)
+
+NitrogenYears <-read.csv(here('Data','Processed','NitrogenYears_Processed.csv'), stringsAsFactors=TRUE)
+
+#Verifying data attributes
+SurgeUptakeNitrogen$Time <- as.factor(SurgeUptakeNitrogen$Time)
+SurgeUptakeNitrogen$Blade_Replicate <- as.factor(SurgeUptakeNitrogen$Blade_Replicate)
+SurgeUptakeNitrogen$Day_Replicate <- as.factor(SurgeUptakeNitrogen$Day_Replicate)
 
 ```
 
@@ -60,9 +72,18 @@ Github Information: https://github.com/Tani-ValdezRivas/ValdezKuuskvereAnsbro
 
 Data sets were found on the Environmental Data Initiative. All sets were from the Santa Barbara Coastal Long Term Ecological Research Site (SBC LTER) which is based  within the University of California, Santa Barbara (UCSB) Marine Science Institute, and is part of the National Science Foundation's LTER Network. 
 
-Data Set 1:
+The first data set focuses on one experimenter done that examines nitrogen and biomass uptake by kelp during timed nitrogen blasting.  The first data set was used to determine if nitrogen uptake varies by time (minutes), season, or nitrogen type. The second data set has dates and percent nitrogen of kelp over almost a twenty year period. This second data set was used to gain a general sense of nitrogen found in kelp in Santa Barbara, CA and to see if that has changed over time.
 
-Data Set 2:
+Table: Data Set Information
+
+Detail | Data Set 1 | Data Set 2
+-----:|:----:|:----:
+Source| Santa Barbara Coastal Long Term Ecological Research (LTER) | Santa Barbara Coastal  Long Term Ecological Research (LTER)
+Retrieved from | https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1022.2 |https://sbclter.msi.ucsb.edu/data/catalog/package/?package=knb-lter-sbc.24
+Variables Used | Nitrogen Types, Season, Day Replicate, Time, Blade Replicate, Uptake Rate, Biomass Uptake Rate |Year, Month, Date, Nitrogen Percent
+Date | 2021 | 2002-2021
+
+The data for nitrogen uptake was cleaned by renaming the column names to be better understood by the public. Multiple columns including columns for Blade Replicate, Day Replicate, Time, Season, and Nitrogen Type were changed to factors. Season and Nitrogen Type also had labels added to capitalize the names of seasons and nitrogen types.Data cleaning for the second data set entailed renaming column names as well. Date was changed from a factor to a date data type. Sites with missing values were also removed. 
 
 \newpage
 
@@ -92,10 +113,156 @@ Surge_Reef_sf <- Site_information %>%
            crs=4326)
 
 # Making a map of the study sites
-Surge_Reef_Map <- mapView(Surge_Reef_sf, layer.name = 'Reef Site locations')
+Surge_Reef_Map <- mapview(Surge_Reef_sf, layer.name = 'Reef Site locations')
 Surge_Reef_Map
 ```
 
+```{r}
+UptakeRateBoxbyType <- ggplot(SurgeUptakeNitrogen) +
+  geom_boxplot(aes(x = Nitrogen_Types, y = Uptake_Rate))+
+  labs(title="Uptake Rate (V(hr1)) by Nitrogen Type")
+UptakeRateBoxbyType
+ggsave(file=here('Output', 'BoxDataExp','UptakeRateBoxbyType.png'), width = 10, height = 10, units = "cm")
+
+BiomassBoxbyType <- ggplot(SurgeUptakeNitrogen) +
+  geom_boxplot(aes(x = Nitrogen_Types, y = Biomass_Uptake))+
+  labs(title= "Biomass Uptake by Nitrogen Type")
+BiomassBoxbyType
+ggsave(file=here('Output','BoxDataExp', 'BiomassBoxbyType.png'), width = 10, height = 10, units = "cm")
+
+UptakeRateBoxbySeason <- ggplot(SurgeUptakeNitrogen) +
+  geom_boxplot(aes(x = Season, y = Uptake_Rate))+
+  labs(title="Uptake Rate (V(hr1)) by Season")
+UptakeRateBoxbySeason
+ggsave(file=here('Output', 'BoxDataExp','UptakeRateBoxbySeason.png'), width = 10, height = 10, units = "cm")
+
+BiomassBoxbySeason <- ggplot(SurgeUptakeNitrogen) +
+  geom_boxplot(aes(x = Season, y = Biomass_Uptake))+
+  labs(title= "Biomass Uptake by Season")
+BiomassBoxbySeason
+ggsave(file=here('Output','BoxDataExp', 'BiomassBoxbySeason.png'), width = 10, height = 10, units = "cm")
+
+UptakeRateBoxbyTime <- ggplot(SurgeUptakeNitrogen) +
+  geom_boxplot(aes(x = Time, y = Uptake_Rate))+
+  labs(title="Uptake Rate (V(hr1)) by Length of Exposure")
+UptakeRateBoxbyTime
+ggsave(file=here('Output','BoxDataExp', 'UptakeRateBoxbyTime.png'), width = 10, height = 10, units = "cm")
+
+BiomassBoxbyTime <- ggplot(SurgeUptakeNitrogen) +
+  geom_boxplot(aes(x = Time, y = Biomass_Uptake))+
+  labs(title= "Biomass Uptake by Length of Exposure")
+BiomassBoxbyTime
+ggsave(file=here('Output','BoxDataExp', 'BiomassBoxbyTime.png'), width = 10, height = 10, units = "cm")
+
+UptakeRateBoxbyDayRep <- ggplot(SurgeUptakeNitrogen) +
+  geom_boxplot(aes(x = Day_Replicate, y = Uptake_Rate))+
+  labs(title="Uptake Rate (V(hr1)) by Day Replicate")
+UptakeRateBoxbyDayRep
+ggsave(file=here('Output', 'BoxDataExp','UptakeRateBoxbyDayRep.png'), width = 10, height = 10, units = "cm")
+
+BiomassBoxbyDayRep <- ggplot(SurgeUptakeNitrogen) +
+  geom_boxplot(aes(x = Day_Replicate, y = Biomass_Uptake))+
+  labs(title= "Biomass Uptake by Day Replicate")
+BiomassBoxbyDayRep
+ggsave(file=here('Output','BoxDataExp', 'BiomassBoxbyDayRep.png'), width = 10, height = 10, units = "cm")
+
+UptakeRateBoxbyBladeRep <- ggplot(SurgeUptakeNitrogen) +
+  geom_boxplot(aes(x = Blade_Replicate, y = Uptake_Rate))+
+  labs(title="Uptake Rate (V(hr1)) by Blade Replicate")
+UptakeRateBoxbyBladeRep
+ggsave(file=here('Output','BoxDataExp', 'UptakeRateBoxbyBladeRep.png'), width = 10, height = 10, units = "cm")
+
+BiomassBoxbyBladeRep <- ggplot(SurgeUptakeNitrogen) +
+  geom_boxplot(aes(x = Blade_Replicate, y = Biomass_Uptake))+
+  labs(title= "Biomass Uptake by Blade Replicate")
+BiomassBoxbyBladeRep
+ggsave(file=here('Output', 'BoxDataExp','BiomassBoxbyBladeRep.png'), width = 10, height = 10, units = "cm")
+```
+
+
+
+```{r Violins}
+# Data Exploration Part 2: Violins of range and means of each component of the data set
+UptakeRateViolinbyType <- ggplot(SurgeUptakeNitrogen) +
+  geom_violin(aes(x = Nitrogen_Types, y = Uptake_Rate))+
+  labs(title="Uptake Rate (V(hr1)) by Nitrogen Type")
+UptakeRateViolinbyType
+ggsave(file=here('Output','ViolinDataExp', 'UptakeRateViolinbyType.png'), width = 10, height = 10, units = "cm")
+
+BiomassViolinbyType <- ggplot(SurgeUptakeNitrogen) +
+  geom_violin(aes(x = Nitrogen_Types, y = Biomass_Uptake))+
+  labs(title= "Biomass Uptake by Nitrogen Type")
+BiomassViolinbyType
+ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyType.png'), width = 10, height = 10, units = "cm")
+
+UptakeRateViolinbySeason <- ggplot(SurgeUptakeNitrogen) +
+  geom_violin(aes(x = Season, y = Uptake_Rate))+
+  labs(title="Uptake Rate (V(hr1)) by Season")
+UptakeRateViolinbySeason
+ggsave(file=here('Output','ViolinDataExp', 'UptakeRateViolinbySeason.png'), width = 10, height = 10, units = "cm")
+
+BiomassViolinbySeason <- ggplot(SurgeUptakeNitrogen) +
+  geom_violin(aes(x = Season, y = Biomass_Uptake))+
+  labs(title= "Biomass Uptake by Season")
+BiomassViolinbySeason
+ggsave(file=here('Output','ViolinDataExp', 'BiomassViolinbySeason.png'), width = 10, height = 10, units = "cm")
+
+UptakeRateViolinbyTime <- ggplot(SurgeUptakeNitrogen) +
+  geom_violin(aes(x = Time, y = Uptake_Rate))+
+  labs(title="Uptake Rate (V(hr1)) by Length of Exposure")
+UptakeRateViolinbyTime
+ggsave(file=here('Output', 'ViolinDataExp','UptakeRateViolinbyTime.png'), width = 10, height = 10, units = "cm")
+
+BiomassViolinbyTime <- ggplot(SurgeUptakeNitrogen) +
+  geom_violin(aes(x = Time, y = Biomass_Uptake))+
+  labs(title= "Biomass Uptake by Length of Exposure")
+BiomassViolinbyTime
+ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyTime.png'), width = 10, height = 10, units = "cm")
+
+UptakeRateViolinbyDayRep <- ggplot(SurgeUptakeNitrogen) +
+  geom_violin(aes(x = Day_Replicate, y = Uptake_Rate))+
+  labs(title="Uptake Rate (V(hr1)) by Day Replicate")
+UptakeRateViolinbyDayRep
+ggsave(file=here('Output', 'ViolinDataExp','UptakeRateViolinbyDayRep.png'), width = 10, height = 10, units = "cm")
+
+BiomassViolinbyDayRep <- ggplot(SurgeUptakeNitrogen) +
+  geom_violin(aes(x = Day_Replicate, y = Biomass_Uptake))+
+  labs(title= "Biomass Uptake by Day Replicate")
+BiomassViolinbyDayRep
+ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyDayRep.png'), width = 10, height = 10, units = "cm")
+
+UptakeRateViolinbyBladeRep <- ggplot(SurgeUptakeNitrogen) +
+  geom_violin(aes(x = Blade_Replicate, y = Uptake_Rate))+
+  labs(title="Uptake Rate (V(hr1)) by Blade Replicate")
+UptakeRateViolinbyBladeRep
+ggsave(file=here('Output', 'ViolinDataExp','UptakeRateViolinbyBladeRep.png'), width = 10, height = 10, units = "cm")
+
+BiomassViolinbyBladeRep <- ggplot(SurgeUptakeNitrogen) +
+  geom_violin(aes(x = Blade_Replicate, y = Biomass_Uptake))+
+  labs(title= "Biomass Uptake by Blade Replicate")
+BiomassViolinbyBladeRep
+ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyBladeRep.png'), width = 10, height = 10, units = "cm")
+
+```
+
+```{r}
+#Data Exploration Part 3
+summary(NitrogenYears)
+
+summary(NitrogenYears$Nitrogen_Percent)
+
+NitrogenYears_Point <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
+  geom_point(alpha=.5)+
+  labs(title="Nitrogen Percent by Year", x="Date", y="Nitrogen Percent")
+
+print(NitrogenYears_Point)
+
+NitrogenYears_Box <- ggplot(NitrogenYears, aes(x=NewSites, y=Nitrogen_Percent))+
+  geom_boxplot()+
+  labs(title="Nitrogen Percent by Site", x="Site", y="Nitrogen Percent")
+
+print(NitrogenYears_Box)
+```
 
 \newpage
 
