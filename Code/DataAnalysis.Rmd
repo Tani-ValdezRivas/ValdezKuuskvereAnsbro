@@ -48,6 +48,10 @@ summary(NitrogenRegressionYear)
 cor.test(NitrogenYears$Nitrogen_Percent, NitrogenYears$Year)
 #Running correlation test, the correlation score is -.202. So there is a negative correlation. So a somewhat weak correlation
 
+par(mfrow = c(2,2), mar=c(2,2,2,2))
+plot(NitrogenRegressionYear)
+par(mfrow = c(1,1))
+
 
 #2. LM for Date
 NitrogenRegressionDate <- lm(NitrogenYears$Nitrogen_Percent ~ NitrogenYears$Date)
@@ -67,36 +71,33 @@ par(mfrow = c(1,1))
 
 
 #4. Scatter plot
-nitrogenbydate <- ggplot(NitrogenYears, aes(x=Date, y=Nitrogen_Percent))+
-  geom_point()+
-  geom_smooth(method="lm")
+#nitrogenbydate <- ggplot(NitrogenYears, aes(x=Date, y=Nitrogen_Percent))+
+ # geom_point()+
+ # geom_smooth(method="lm")
 
 #why is geomsmooth not showing up?
 #how to get less dates on the x axis?
-print(nitrogenbydate)
+#print(nitrogenbydate)
 
 #5. Tukey
-NitrogenDateAOV <- aov(data = NitrogenYears, Nitrogen_Percent ~Date)
-summary(NitrogenDateAOV)
+#NitrogenDateAOV <- aov(data = NitrogenYears, Nitrogen_Percent ~Date)
+#summary(NitrogenDateAOV)
 
-TukeyHSD(NitrogenDateAOV)
+#TukeyHSD(NitrogenDateAOV)
 
-NitrogenDateTotals <- HSD.test(NitrogenDateAOV, "Year", group =TRUE)
-NitrogenDateTotals
+#NitrogenDateTotals <- HSD.test(NitrogenDateAOV, "Year", group =TRUE)
+#NitrogenDateTotals
 
 NitrogenYears$Year <- as.factor(NitrogenYears$Year)
 NitrogenPlot <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
   geom_boxplot()
 print(NitrogenPlot)
 
-#6. Season Plot #average the months
-Season <- ggplot(NitrogenYears, aes(X=))
-
 
 
 ```
 ```{r}
-#7. Season Plot #average the months
+#6. Season Plot #average the months
 Nitrogen.monthly.preliminary <- NitrogenYears %>%
   mutate(CleanDate = my(paste0(Month,"-",Year)))
 
@@ -106,7 +107,7 @@ Nitrogen.monthly <-aggregate(Nitrogen.monthly.preliminary$Nitrogen_Percent,
 
 colnames(Nitrogen.monthly) <- c("Date", "Mean_NitrogenPercent")
 
-#8. Generate time series monthly
+#7. Generate time series monthly
 f_monthmonthly <- month(first(Nitrogen.monthly$Date))
 f_yearmonthly <- year(first(Nitrogen.monthly$Date))
 
