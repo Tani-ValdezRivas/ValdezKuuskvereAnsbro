@@ -11,12 +11,19 @@ ENV 872 Course Project for T. Valdez, C. Kuuskvere, E. Ansbro
 
 <describe the purpose of this repository, the information it contains, and any relevant analysis goals. What, why, where, when, how?>
 
+This repository contains final project work completed for the Duke University Nicholas School of the Environment Fall 2023 Environmental Data Exploration course. The purpose of this repository is to showcase team members Tani, Cara, and Erin's environmental data analytics skills in R studio through an investigation of Nitrogen Surge Uptake in Giant Kelp through an evaluation of a data set from the Environmental Data Initiative Repository. We evaluate data from the Santa Barbara Coastal LTER Reef: Surge uptake capability in Macrocystis pyrifera in response to pulses of three different forms of nitrogen (doi:10.6073/pasta/d079ff0e95defb71b87040f56235d755). We aim to answer four proposed research questions regarding which variables in the data sets influence Nitrogen Surge Uptake Rates. This evaluation is conducted through data wrangling, exploration by means of mapping the samples and visualizing variables with box and violin plots, and analysis conducted by means of data visualization and statistical anova, linear regression, and tukey HSD tests.  
+
 ## Investigators
 
+Cara Kuuskvere, Duke University Nicholas School of the Environment
+Master of Environmental Management Candidate Class of 2025
+Environmental Data Analytics Fall 2023 Student 
+cara.kuuskvere@ duke.edu 
 <name(s), affiliation(s), contact information, roles (if applicable)>
 
 ## Keywords
 
+Giant Kelp, EDEFall2023, Nitrogen Surge Uptake, Duke University Nicholas School, SBC LTER 
 <add relevant keywords here>
 
 ## Database Information
@@ -27,7 +34,19 @@ ENV 872 Course Project for T. Valdez, C. Kuuskvere, E. Ansbro
 ## Folder structure, file formats, and naming conventions 
 
 <describe the folders contained in the repository, including what type of files they contain>
+Code: r-markdown files containing data processing and wrangling code, data exploration, data analysis, and the project report r-markdown and HTLM files. 
 
+Data:
+  Processed: exported csv files resulting from data wrangling and processing 
+  Raw: imported csv files from environmental data initiative 
+  
+Output: 
+  BoxDataExp: PNG files of box plots created to visualize variables' mean and quartiles in the data exploration component of our work
+    naming convention: variable measured, visualization type, variable measured against 
+  ViolinDataExp: PNG files of violin plots created to visualize variables' range and spread in the data exploration component of our work
+    naming convention: variable measured, visualization type, variable measured against
+  Analysis: PNG files of box and scatter plots resulting from data visualizations produced to supplement analysis of research questions.
+  naming convention: variable measured, variable measured against, visualization type
 <describe the formats of files for the various purposes contained in the repository>
 
 <describe your file naming conventions>
