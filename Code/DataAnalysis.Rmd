@@ -13,7 +13,7 @@ editor_options:
 library(here)
 here()
 
-install.packages("forcats")
+#install.packages("forcats")
 
 # Loading packages
 library(tidyverse)
@@ -198,7 +198,7 @@ par(mfrow = c(1,1))
 
 ```{r}
 NitrogenSeasonBox <- 
-  ggplot(Season, aes(x = Season, y = Uptake_Rate)) +
+  ggplot(SurgeUptakeNitrogen, aes(x = Season, y = Uptake_Rate)) +
   geom_boxplot()+
   labs(title="Nitrogen Uptake Rate by Season", x="Season", y="Nitrogen Uptake Rate (V(hr1))")
 
@@ -214,7 +214,7 @@ ggsave(file=here('Output', 'Analysis','NitrogenSeasonBox.png'), width = 10, heig
 
 
 NitrogenSeasonPoint <- 
-  ggplot(Season, aes(x = DayReplicate, y = Uptake_Rate, color=Season)) +
+  ggplot(SurgeUptakeNitrogen, aes(x = Day_Replicate, y = Uptake_Rate, color=Season)) +
   geom_point(alpha=.6)+
   labs(title="Nitrogen Uptake Rate by Day and Season", x="Days", y="Nitrogen Uptake Rate (V(hr1))")
 
@@ -231,7 +231,7 @@ ggsave(file=here('Output', 'Analysis','NitrogenSeasonPoint.png'), width = 10, he
 #print(BiomassSeasonPoint)
 
 NitrogenSeasonBox2 <- 
-  ggplot(Season, aes(x = Nitrogen_Types, y = Uptake_Rate, color=Season)) +
+  ggplot(SurgeUptakeNitrogen, aes(x = Nitrogen_Types, y = Uptake_Rate, color=Season)) +
  geom_boxplot()+
  labs(title="Nitrogen Uptake Rate by Types and Season", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
 
@@ -239,18 +239,20 @@ print(NitrogenSeasonBox2)
 ggsave(file=here('Output', 'Analysis','NitrogenSeasonBox2.png'), width = 10, height = 10, units = "cm")
 ```
 ```{r Season LM}
-SeasonLM <-lm(data = Season, Uptake_Rate~Season)
+SurgeUptakeNitrogen$Time <- as.factor(SurgeUptakeNitrogen$Time)
+
+SeasonLM <-lm(data = SurgeUptakeNitrogen, Uptake_Rate~Season)
 summary(SeasonLM)
 
-SeasonAOV <- aov(data=Season, Uptake_Rate~Season)
+SeasonAOV <- aov(data=SurgeUptakeNitrogen, Uptake_Rate~Season)
 summary(SeasonAOV)
 
 
-NitrogenAIC <- lm(data=Season, Uptake_Rate~Season+Nitrogen_Types+NewTime)
+NitrogenAIC <- lm(data=SurgeUptakeNitrogen, Uptake_Rate~Season+Nitrogen_Types+Time)
 step(NitrogenAIC)
 
 #really for uptake duration, not season
-DurationAOV <- aov(data=Season, Uptake_Rate~NewTime)
+DurationAOV <- aov(data=SurgeUptakeNitrogen, Uptake_Rate~Time)
 summary(DurationAOV)
 
 TukeyHSD(DurationAOV)
@@ -267,8 +269,8 @@ ExposureLength <- SurgeUptakeNitrogen %>%
   mutate(Time = as.factor(Time))
 
 
-ExposureLength$Season <-factor(Season$Season, labels = c("Spring", "Summer"))
-ExposureLength$Nitrogen_Types<-factor(Season$Nitrogen_Types, labels= c("Ammonium", "Nitrate", "Urea"))
+ExposureLength$Season <-factor(SurgeUptakeNitrogen$Season, labels = c("Spring", "Summer"))
+ExposureLength$Nitrogen_Types<-factor(SurgeUptakeNitrogen$Nitrogen_Types, labels= c("Ammonium", "Nitrate", "Urea"))
 
 
 NitrogenTimeBox <- 

@@ -188,7 +188,7 @@ ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyBladeRep.png'), width
 
 ```
 
-#Exploring Notrogen by Years Data
+#Exploring Nitrogen by Years Data
 ```{r}
 summary(NitrogenYears_Processed)
 
