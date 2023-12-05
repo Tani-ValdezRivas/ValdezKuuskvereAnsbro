@@ -33,12 +33,12 @@ SurgeUptakeNitrogen <-
 NitrogenYears <-read.csv(here('Data','Processed','NitrogenYears_Processed.csv'), stringsAsFactors=TRUE)
 ```
 
-# Question 1: Does giant kelp nitrogen percent vary over year or season?
+# Question 1:	Has nitrogen concentration in giant kelp changed over the years (2002-2021)?
 
 H0 : There is no significant difference of nitrogen percent over the past twenty years.
 HA : There is significant difference of nitrogen percent over the past twenty years.
 
-Prior to conducting this analysis, it was identified that nitrogen percent did not seem to visually change over the years. To get a better understanding..... 
+Prior to conducting this analysis, it was identified that nitrogen percent did not seem to visually change over the years. To get a better understanding of the relationship, linear regression and time series analysis was conducted.  
 ```{r Q1}
 #1. LM for year
 NitrogenRegressionYear <- lm(NitrogenYears$Nitrogen_Percent ~ NitrogenYears$Date)
@@ -154,6 +154,8 @@ Nitrogen_Monthly_MK <- Kendall::MannKendall(Nitrogen_NoSeasonal)
 Nitrogen_Monthly_MK
 summary(Nitrogen_Monthly_MK)
 ```
+# Question 2:	Does giant kelp nitrogen concentration amount vary by season?
+
 ```{r Q1 cont.}
 #More month stuff
 
@@ -192,7 +194,7 @@ par(mfrow = c(1,1))
 ```
 
 
-# Question 2: Does giant kelp nitrogen surge uptake vary per spring and summer season?
+# Question 3:	Does nitrogen surge uptake vary between the spring and summer seasons?
 #Need to explain uptake rate calculation
 H0 : There is no significant difference of nitrogen surge uptake between spring and summer seasons.
 HA : There is significant difference of nitrogen surge uptake between spring and summer seasons.
