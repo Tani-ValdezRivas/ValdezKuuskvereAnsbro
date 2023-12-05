@@ -246,7 +246,7 @@ BiomassViolinbyBladeRep
 ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyBladeRep.png'), width = 10, height = 10, units = "cm")
 
 ```
-
+The last part of the exploratory analysis focused on an overview of nitrogen concentration amount over the last twenty years. A summary was used on the entire data set as well as on the nitrogen concentration column to gain a general sense of what amounts were present. A scatter plot was used to see the relationship between year and nitrogen concentration amount. Lastly, a boxplot was used to visualize the relationship between sites and nitrogen concentration. Looking at this data, it appeared concentration amount was not too different by site. Looking at the scatter plot for year, it looked like nitrogen decreased slightly. This was then explored further in the Data Analysis section.
 ```{r Nitrogen Data Exploration, echo=FALSE, message=FALSE}
 #Data Exploration Part 3
 summary(NitrogenYears)
