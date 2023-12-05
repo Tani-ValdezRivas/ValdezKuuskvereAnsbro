@@ -72,7 +72,7 @@ Github Information: https://github.com/Tani-ValdezRivas/ValdezKuuskvereAnsbro
 
 Data sets were found on the Environmental Data Initiative. All sets were from the Santa Barbara Coastal Long Term Ecological Research Site (SBC LTER) which is based  within the University of California, Santa Barbara (UCSB) Marine Science Institute, and is part of the National Science Foundation's LTER Network. 
 
-The first data set focuses on one experimenter done that examines nitrogen and biomass uptake by kelp during timed nitrogen blasting.  The first data set was used to determine if nitrogen uptake varies by time (minutes), season, or nitrogen type. The second data set has dates and percent nitrogen of kelp over almost a twenty year period. This second data set was used to gain a general sense of nitrogen found in kelp in Santa Barbara, CA and to see if that has changed over time.
+The first data set focuses on one experiment done that examines nitrogen and biomass uptake by kelp during timed nitrogen blasting.  The first data set was used to determine if nitrogen uptake varies by time (minutes), season, or nitrogen type. The second data set has dates and percent nitrogen of kelp over almost a twenty year period. This second data set was used to gain a general sense of nitrogen found in kelp in Santa Barbara, CA and to see if that has changed over time.
 
 Table: Data Set Information
 
@@ -90,11 +90,11 @@ The data for nitrogen uptake was cleaned by renaming the column names to be bett
 # Exploratory Analysis 
 
 The Map shows the sampling sites of nitrogen uptake along the coast of California
-```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+```{r Map, echo=FALSE, message=FALSE}
 
-# Mapping the locations of the study sites
+# Data Exploration Part 1: Mapping the locations of the study sites
 
-# Creating a dataframe of the locations
+# Creating a data frame of the locations
 Site_Name <- c("Mohawk Reef", "Arroyo Quemado Reef", "Arroyo Burro Reef")
 Longitude <- c("-119.7295", "-120.11905", "-119.7445915	")
 Latitude <- c("34.3940708", "34.46774988", "34.400275")
@@ -117,7 +117,8 @@ Surge_Reef_Map <- mapview(Surge_Reef_sf, layer.name = 'Reef Site locations')
 Surge_Reef_Map
 ```
 
-```{r}
+```{r Box Plots, echo=FALSE, message=FALSE}
+# Data Exploration Part 2.1: Box Plots to visualize data means and quartiles
 UptakeRateBoxbyType <- ggplot(SurgeUptakeNitrogen) +
   geom_boxplot(aes(x = Nitrogen_Types, y = Uptake_Rate))+
   labs(title="Uptake Rate (V(hr1)) by Nitrogen Type")
@@ -181,8 +182,8 @@ ggsave(file=here('Output', 'BoxDataExp','BiomassBoxbyBladeRep.png'), width = 10,
 
 
 
-```{r Violins}
-# Data Exploration Part 2: Violins of range and means of each component of the data set
+```{r Violins, echo=FALSE, message=FALSE}
+# Data Exploration Part 2.2: Violins to visualize range and spread of each component of the data set
 UptakeRateViolinbyType <- ggplot(SurgeUptakeNitrogen) +
   geom_violin(aes(x = Nitrogen_Types, y = Uptake_Rate))+
   labs(title="Uptake Rate (V(hr1)) by Nitrogen Type")
@@ -245,7 +246,7 @@ ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyBladeRep.png'), width
 
 ```
 
-```{r}
+```{r Nitrogen Data Exploration, echo=FALSE, message=FALSE}
 #Data Exploration Part 3
 summary(NitrogenYears)
 
@@ -269,22 +270,41 @@ print(NitrogenYears_Box)
 # Analysis
 
 
+## Question 1: Does giant kelp nitrogen percent vary over year or season?
 
-## Question 1: Does giant kelp nitrogen and ammonia surge uptake vary per spring and summer season?
+H0 : There is no significant difference of nitrogen percent over the past twenty years.
+HA : There is significant difference of nitrogen percent over the past twenty years.
+
+Prior to conducting this analysis, it was identified that nitrogen percent did not seem to visually change over the years. To get a better understanding..... 
+```{r}
+
+```
+
+
+
+
+## Question 2: Does giant kelp nitrogen and ammonia surge uptake vary per spring and summer season?
+H0 : There is no significant difference of nitrogen surge uptake between spring and summer seasons.
+HA : There is significant difference of nitrogen surge uptake between spring and summer seasons.
+
+The metadata indicates that the giant kelp blades studied were collected during the nitrate replete spring and the nitrate-deplete summer. The five replicate experiments were conducted in both spring and summer of 2019, which allows us to find potential differences in the nitrogen surge uptake of the two populations. The experimenters calculate uptake rate using a modified version of an equation by Legendre and Grosselin (1997) V= (nt - n0)/[t(ds-d0)] where nt is the atom percentage of Nitrogen-15 in the blade after incubation; n0 is the average concentration of isotope in the control blades; ds is the atom percentage of Nitrogen-15 in the seawater at the start of the incubation; d0 is the atom percentage of Nitrogen-15 in the nitrate pool before isotope tracer was added; and t is the length of the incubation time in minutes.
 
 ```{r}
 
 ```
 
 
-## Question 2:  Does giant kelp nitrogen and ammonia surge uptake vary based on the amount of exposure?
-
+## Question 3:  Does giant kelp nitrogen and ammonia surge uptake vary based on the amount of exposure?
+H0 : There is no significant difference of nitrogen surge uptake between 
+different exposure lengths.
+HA : There is significant difference of nitrogen surge uptake between different
+exposure lengths.
 ```{r}
 
 ```
 
 
-## Question 3: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
+## Question 4: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
 
 ```{r}
 
@@ -303,6 +323,7 @@ Cedeno, T., Brzezinski, M., Miller, R., Reed, D. (2021). Santa Barbara Coastal L
 
 Fernández, P.A., Gaitán-Espitia, J.D., Leal, P.P. et al. (2020). Nitrogen sufficiency enhances thermal tolerance in habitat-forming kelp: implications for acclimation under thermal stress. Scientific Reports 10, 3186.https://doi.org/10.1038/s41598-020-60104-4
 
+Legendre, L., Gosselin, M., (1997). Estimation of N or C uptake rates by phytoplankton using 15N or 13C: revisiting the usual computation formulae, Journal of Plankton Research, Volume 19, Issue 2, February 1997, Pages 263–271
 Hurlimann, S. (2019, July 4). How kelp naturally combats global climate change. Science in the News.https://sitn.hms.harvard.edu/flash/2019/how-kelp-naturally-combats-global-climate-change/  
 
 Seddon N., Chausson A., Berry P., Girardin Cécile A. J., Smith A., Turner B. (2020). Understanding the value and limits of nature-based solutions to climate change and other global challenges. The Royal Society 375, 1794. http://doi.org/10.1098/rstb.2019.0120 
