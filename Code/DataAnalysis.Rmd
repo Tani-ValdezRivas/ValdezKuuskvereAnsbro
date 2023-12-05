@@ -96,7 +96,7 @@ Season <- ggplot(NitrogenYears, aes(X=))
 
 ```
 ```{r}
-#6. Season Plot #average the months
+#7. Season Plot #average the months
 Nitrogen.monthly.preliminary <- NitrogenYears %>%
   mutate(CleanDate = my(paste0(Month,"-",Year)))
 
@@ -106,16 +106,7 @@ Nitrogen.monthly <-aggregate(Nitrogen.monthly.preliminary$Nitrogen_Percent,
 
 colnames(Nitrogen.monthly) <- c("Date", "Mean_NitrogenPercent")
 
-#7. 
-# Generate time series daily
-#f_monthdaily <- month(first(NitrogenYears$Date))
-#f_yeardaily <- year(first(NitrogenYears$Date))
-
-#Nitrogen.daily.ts <- ts(NitrogenYears$Nitrogen_Percent,
- #                            start=c(f_yeardaily,f_monthdaily),
-  #                           frequency=365)
-
-# Generate time series monthly
+#8. Generate time series monthly
 f_monthmonthly <- month(first(Nitrogen.monthly$Date))
 f_yearmonthly <- year(first(Nitrogen.monthly$Date))
 
