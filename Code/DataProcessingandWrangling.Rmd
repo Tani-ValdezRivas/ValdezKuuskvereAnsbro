@@ -31,7 +31,7 @@ When you click the **Knit** button a document will be generated that includes bo
 # Re-naming the column name
 colnames(Nitrogen) <-c("Nitrogen_Types", "Season", "Day_Replicate", "Time","Blade_Replicate","Uptake_Rate","Biomass_Uptake","Nitrogen_Final_%","Nitrogen_Initial_%")
 
-# Changing Blade replicate, Day replicate, time, seaon, and nitrgoen types to factors
+# Changing Blade replicate, Day replicate, time, season, and nitrogen types to factors
 Nitrogen$Blade_Replicate <- as.factor(Nitrogen$Blade_Replicate)
 Nitrogen$Day_Replicate <- as.factor(Nitrogen$Day_Replicate)
 Nitrogen$Time <- as.factor(Nitrogen$Time)
@@ -53,7 +53,7 @@ NitrogenYears <- subset(NitrogenYears, NitrogenYears$Sample_Number>0)
 
 summary(NitrogenYears$Site) 
 
-#Updating Site Names so thre are no extra spaces at the end
+#Updating Site Names so there are no extra spaces at the end
 NitrogenYears <-NitrogenYears %>%
   mutate(NewSites = as.factor(str_squish(Site)))
 
