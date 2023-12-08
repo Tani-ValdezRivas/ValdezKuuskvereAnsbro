@@ -2,17 +2,8 @@
 title: "Trends in giant kelp nitrogen surge uptake"
 author: "Erin Ansbro, Cara Kuuskvere, Tani Valdez Rivas"
 date: "December 2023"
-output: 
-  html_document:
-    toc: true
+output: html_document
 ---
-\newpage
-\tableofcontents
-\newpage
-\listoftables 
-\newpage
-\listoffigures
-\newpage
 
 ```{r include=FALSE}
 # Set your working directory
@@ -49,6 +40,13 @@ SurgeUptakeNitrogen$Blade_Replicate <- as.factor(SurgeUptakeNitrogen$Blade_Repli
 SurgeUptakeNitrogen$Day_Replicate <- as.factor(SurgeUptakeNitrogen$Day_Replicate)
 
 ```
+\newpage
+\tableofcontents
+\newpage
+\listoftables 
+\newpage
+\listoffigures
+\newpage
 
 
 # Rationale and Research Questions
@@ -118,7 +116,7 @@ Surge_Reef_Map <- mapview(Surge_Reef_sf, layer.name = 'Reef Site locations')
 Surge_Reef_Map
 ```
 Boxplot text
-```{r Box Plots, echo=FALSE, message=FALSE}
+```{r Box Plots, fig.height = 3, fig.width=5, echo=FALSE, message=FALSE}
 # Data Exploration Part 2.1: Box Plots to visualize data means and quartiles
 UptakeRateBoxbyType <- ggplot(SurgeUptakeNitrogen) +
   geom_boxplot(aes(x = Nitrogen_Types, y = Uptake_Rate))+
@@ -248,7 +246,7 @@ ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyBladeRep.png'), width
 ```
 \newpage
 The last part of the exploratory analysis focused on an overview of nitrogen concentration amount over the last twenty years. A summary was used on the entire data set as well as on the nitrogen concentration column to gain a general sense of what amounts were present.  
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 #Data Exploration Part 3
 
 summary(NitrogenYears)
@@ -256,7 +254,7 @@ summary(NitrogenYears)
 summary(NitrogenYears$Nitrogen_Percent)
 ```
 A scatter plot (Fig 1.2) was used to visualize the relationship between year and nitrogen concentration amount.
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE, fig.cap="Figure 1"}
 #Data Exploration Part 3
 
 NitrogenYears_Point <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
@@ -268,7 +266,7 @@ print(NitrogenYears_Point)
 
 Lastly, a boxplot, see below (Fig 1.3) was used to visualize the relationship between sites and nitrogen concentration. Looking at this data, it appeared concentration amount was not too different by site. Looking at the scatter plot for year, it looked like nitrogen decreased slightly. This was then explored further in the Data Analysis section.
 
-```{r Nitrogen Data Exploration, echo=FALSE, message=FALSE}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 #Data Exploration Part 3
 
 NitrogenYears_Box <- ggplot(NitrogenYears, aes(x=NewSites, y=Nitrogen_Percent))+
@@ -294,7 +292,7 @@ The interaction between nitrogen concentration and year is significant (p < 0.00
 Due to this, we then moved to date instead of year to see if that increased the ___. The interaction between nitrogen concentration and collection date is significant (p < 0.001). We can reject the null hypothesis and accept that nitrogen concentration changes _____. The date explains 97.4% of nitrogen percent amount change. Still, we can reject the null hypothesis and accept that the date predicts nitrogen concentration. Below is a boxplot showing change in nitrogen concentration over time (Fig).
 
 
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 #1. LM for year
 NitrogenRegressionYear <- lm(NitrogenYears$Nitrogen_Percent ~ NitrogenYears$Date)
 #Linear regression on the nitrogen percent amount by year. P-value is less than .05. Which means there is significant difference. Residual standard error is small at .75 on 1280 degrees of freedom. However, year only explains 5% of nitrogen percent amount. 
@@ -320,14 +318,14 @@ print(NitrogenPlot)
 ```
 
 Below are the normal distribution residuals charts for the linear regression of change nitrogen by date.(Fig 2.2)
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 par(mfrow = c(2,2), mar=c(2,2,2,2))
 plot(NitrogenRegressionDate)
 par(mfrow = c(1,1))
 ```
 
 A time series analysis was completed to see how nitrogen concentration changes over time. The following plot displays the decomposed nitrogen concentration components of the time series run (Fig 2.3). As you can see, there is seasonality, which confirms our rejecting of the null hypothesis. 
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 #6. Season Plot #average the months
 Nitrogen.monthly.preliminary <- NitrogenYears %>%
   mutate(CleanDate = my(paste0(Month,"-",Year)))
@@ -353,7 +351,7 @@ plot(Nitrogen.monthly.ts.decomp)
 
 ```
 The Mann-Kendall analysis performed on the nitrogen concentration non-seasonal time series produced a tau value of -0.19 with a p-value of less than 0.05. As a result, the data displays a significant, decreasing trend for nitrogen concentration. The plot below displays the non-seasonal nitrogen concentration amount in the time series which was produced by removing the seasonal component from the time series (Fig 2.4).
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 #12 Run SMK test monthly
 Nitrogen_Monthly_SMK <- Kendall::SeasonalMannKendall(Nitrogen.monthly.ts)
 
@@ -392,7 +390,7 @@ HA : There is significant difference of nitrogen concentration by season.
 The interaction between nitrogen concentration and collection date is significant (p < 0.001). We can reject the null hypothesis and accept that nitrogen concentration changes _____.
 The boxplot below shows the change in nitrogen concentration over seasons (Fig 2.5). 
 
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 NitrogenYears$Month <- factor(NitrogenYears$Month, levels = c(1,2,3,4,5,6,7,8,9,10,11,12),labels =c(  
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",  
     "Oct", "Nov", "Dec") )
@@ -415,7 +413,7 @@ summary(NitrogenRegressionMonth)
 
 ```
 
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 
 #3. Normal Distribution
 par(mfrow = c(2,2), mar=c(2,2,2,2))
@@ -424,7 +422,7 @@ par(mfrow = c(1,1))
 
 ```
 
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 
 NitrogenSeasonPlot <- ggplot(NitrogenYears, aes(x=SeasonNames, y=Nitrogen_Percent))+
   geom_boxplot()
@@ -442,7 +440,7 @@ The metadata indicates that the giant kelp blades studied were collected during 
 H0 : There is no significant difference of nitrogen surge uptake between spring and summer seasons.
 HA : There is significant difference of nitrogen surge uptake between spring and summer seasons.
 
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 
 ```
 
@@ -453,14 +451,14 @@ different exposure lengths.
 HA : There is significant difference of nitrogen surge uptake between different
 exposure lengths.
 
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 
 ```
 
 ## Question 5: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
 H0 : There is no significant difference of nitrogen surge uptake of different nitrogen types.
 HA : There is significant difference of nitrogen surge uptake between different nitrogen types.
-```{r}
+```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE}
 
 ```
 
