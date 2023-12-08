@@ -2,7 +2,7 @@
 title: "Trends in giant kelp nitrogen surge uptake"
 author: "Erin Ansbro, Cara Kuuskvere, Tani Valdez Rivas"
 date: "December 2023"
-output: html_document
+output: pdf_document
 ---
 
 ```{r include=FALSE}
@@ -73,7 +73,7 @@ Data sets were found on the Environmental Data Initiative. All sets were from th
 
 The first data set focuses on one experiment done that examines nitrogen and biomass uptake by kelp during timed nitrogen blasting.  The first data set was used to determine if nitrogen uptake varies by time (minutes), season, or nitrogen type. The second data set has dates and percent nitrogen of kelp over almost a twenty year period. This second data set was used to gain a general sense of nitrogen found in kelp in Santa Barbara, CA and to see if that has changed over time.
 
-\Table1:Data Set Information
+Table 1:Data Set Information
 
 Detail | Data Set 1 | Data Set 2
 -----:|:----:|:----:
@@ -94,26 +94,26 @@ A map was created to gain a sense of location. The Map shows the sampling sites 
 # Data Exploration Part 1: Mapping the locations of the study sites
 
 # Creating a data frame of the locations
-Site_Name <- c("Mohawk Reef", "Arroyo Quemado Reef", "Arroyo Burro Reef")
-Longitude <- c("-119.7295", "-120.11905", "-119.7445915	")
-Latitude <- c("34.3940708", "34.46774988", "34.400275")
+#Site_Name <- c("Mohawk Reef", "Arroyo Quemado Reef", "Arroyo Burro Reef")
+#Longitude <- c("-119.7295", "-120.11905", "-119.7445915	")
+#Latitude <- c("34.3940708", "34.46774988", "34.400275")
 
-Site_information <- data.frame(Site_Name, Longitude, Latitude)
+#Site_information <- data.frame(Site_Name, Longitude, Latitude)
 
 # Changing Site Name, Longitude, Latitude to factors and numerics
-Site_information$Site_Name <- as.factor(Site_information$Site_Name)
-Site_information$Longitude <- as.numeric(Site_information$Longitude)
-Site_information$Latitude <- as.numeric(Site_information$Latitude)
+#Site_information$Site_Name <- as.factor(Site_information$Site_Name)
+#Site_information$Longitude <- as.numeric(Site_information$Longitude)
+#Site_information$Latitude <- as.numeric(Site_information$Latitude)
 
 
 # Converting the dataframe into a spatial reference frame
-Surge_Reef_sf <- Site_information %>% 
-  st_as_sf(coords = c('Longitude','Latitude'),
-           crs=4326)
+#Surge_Reef_sf <- Site_information %>% 
+ # st_as_sf(coords = c('Longitude','Latitude'),
+  #         crs=4326)
 
 # Making a map of the study sites
-Surge_Reef_Map <- mapview(Surge_Reef_sf, layer.name = 'Reef Site locations')
-Surge_Reef_Map
+#Surge_Reef_Map <- mapview(Surge_Reef_sf, layer.name = 'Reef Site locations')
+#Surge_Reef_Map
 ```
 Boxplot text
 ```{r Box Plots, fig.height = 3, fig.width=5, echo=FALSE, message=FALSE}
@@ -254,7 +254,7 @@ summary(NitrogenYears)
 summary(NitrogenYears$Nitrogen_Percent)
 ```
 A scatter plot (Fig 1.2) was used to visualize the relationship between year and nitrogen concentration amount.
-```{r, fig.height = 3, fig.width=4, echo=FALSE, message=FALSE, fig.cap="Figure 1"}
+```{r,  message=FALSE, fig.cap="Figure 1"}
 #Data Exploration Part 3
 
 NitrogenYears_Point <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
