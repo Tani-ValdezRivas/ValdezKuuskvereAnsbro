@@ -261,7 +261,7 @@ TukeyHSD(SeasonAOV)
 #print(NitrogenTukey)
 ```
 
-# Question 3: Does giant kelp nitrogen surge uptake vary based on the amount of exposure?
+# Question 4: Does giant kelp nitrogen surge uptake vary based on the amount of exposure?
 H0 : There is no significant difference of nitrogen surge uptake between 
 different exposure lengths.
 HA : There is significant difference of nitrogen surge uptake between different
@@ -336,7 +336,7 @@ TukeyHSD(TimeDurationAOV)
 
 ```
 
-# Question 4: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
+# Question 5: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
 H0 : There is no significant difference of nitrogen surge uptake of different nitrogen types.
 HA : There is significant difference of nitrogen surge uptake between different nitrogen types.
 
