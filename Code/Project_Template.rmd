@@ -75,7 +75,7 @@ Data sets were found on the Environmental Data Initiative. All sets were from th
 
 The first data set focuses on one experiment done that examines nitrogen and biomass uptake by kelp during timed nitrogen blasting.  The first data set was used to determine if nitrogen uptake varies by time (minutes), season, or nitrogen type. The second data set has dates and percent nitrogen of kelp over almost a twenty year period. This second data set was used to gain a general sense of nitrogen found in kelp in Santa Barbara, CA and to see if that has changed over time.
 
-Table 1: Data Set Information
+\Table1:Data Set Information
 
 Detail | Data Set 1 | Data Set 2
 -----:|:----:|:----:
@@ -246,6 +246,7 @@ BiomassViolinbyBladeRep
 ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyBladeRep.png'), width = 10, height = 10, units = "cm")
 
 ```
+\newpage
 The last part of the exploratory analysis focused on an overview of nitrogen concentration amount over the last twenty years. A summary was used on the entire data set as well as on the nitrogen concentration column to gain a general sense of what amounts were present.  
 ```{r}
 #Data Exploration Part 3
