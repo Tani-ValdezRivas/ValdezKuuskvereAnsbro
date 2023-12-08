@@ -11,7 +11,7 @@ output:
 \newpage
 \listoftables 
 \newpage
-\listoffigures 
+\listoffigures
 \newpage
 
 ```{r include=FALSE}
@@ -75,7 +75,7 @@ Data sets were found on the Environmental Data Initiative. All sets were from th
 
 The first data set focuses on one experiment done that examines nitrogen and biomass uptake by kelp during timed nitrogen blasting.  The first data set was used to determine if nitrogen uptake varies by time (minutes), season, or nitrogen type. The second data set has dates and percent nitrogen of kelp over almost a twenty year period. This second data set was used to gain a general sense of nitrogen found in kelp in Santa Barbara, CA and to see if that has changed over time.
 
-Table: Data Set Information
+Table 1: Data Set Information
 
 Detail | Data Set 1 | Data Set 2
 -----:|:----:|:----:
@@ -435,11 +435,11 @@ print(NitrogenSeasonPlot)
 The last three questions focus on the experiment completed over five days in the spring and summer of 2019.  Nitrogen was blasted for 45 minutes and data on nitrogen and biomass update was recorded. 
 
 
-H0 : There is no significant difference of nitrogen surge uptake between spring and summer seasons.
-HA : There is significant difference of nitrogen surge uptake between spring and summer seasons.
-
 The metadata indicates that the giant kelp blades studied were collected during the nitrate replete spring and the nitrate-deplete summer. The five replicate experiments were conducted in both spring and summer of 2019, which allows us to find potential differences in the nitrogen surge uptake of the two populations. The experimenters calculate uptake rate using a modified version of an equation by Legendre and Grosselin (1997) V= (nt - n0)/[t(ds-d0)] where nt is the atom percentage of Nitrogen-15 in the blade after incubation; n0 is the average concentration of isotope in the control blades; ds is the atom percentage of Nitrogen-15 in the seawater at the start of the incubation; d0 is the atom percentage of Nitrogen-15 in the nitrate pool before isotope tracer was added; and t is the length of the incubation time in minutes.
 
+
+H0 : There is no significant difference of nitrogen surge uptake between spring and summer seasons.
+HA : There is significant difference of nitrogen surge uptake between spring and summer seasons.
 
 ```{r}
 
@@ -467,7 +467,14 @@ HA : There is significant difference of nitrogen surge uptake between different 
 
 # Summary and Conclusions
 
+Table 2: Significance Values
 
+Research Question | Tau Value | P-Value
+-----:|:----:|:----:
+Source| Santa Barbara Coastal Long Term Ecological Research (LTER) | Santa Barbara Coastal  Long Term Ecological Research (LTER)
+Retrieved from | https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1022.2 |https://sbclter.msi.ucsb.edu/data/catalog/package/?package=knb-lter-sbc.24
+Variables Used | Nitrogen Types, Season, Day Replicate, Time, Blade Replicate, Uptake Rate, Biomass Uptake Rate |Year, Month, Date, Nitrogen Percent
+Date | 2021 | 2002-2021
 \newpage
 
 # References
