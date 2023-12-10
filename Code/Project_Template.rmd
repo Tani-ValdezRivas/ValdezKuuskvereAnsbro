@@ -11,13 +11,14 @@ library(here)
 here()
 
 # Loading packages
-library(tidyverse)
+library(tidyverse, quietly=TRUE)
 library(lubridate)
 library(cowplot)
 library(knitr)
 library(sf)
 library(leaflet)
-library(mapview); mapviewOptions(fgb = FALSE)
+#library(mapview); mapviewOptions(fgb = FALSE)
+
 
 # Reading in the data
 SurgeUptakeNitrogen <-
@@ -74,12 +75,20 @@ Data sets were found on the Environmental Data Initiative. All sets were from th
 
 The first data set focuses on one experiment done that examines nitrogen and biomass uptake by kelp during timed nitrogen blasting.  The first data set was used to determine if nitrogen uptake varies by time (minutes), season, or nitrogen type. The second data set has dates and percent nitrogen of kelp over almost a twenty year period. This second data set was used to gain a general sense of nitrogen found in kelp in Santa Barbara, CA and to see if that has changed over time.
 
-Table 1:Data Set Information
+```{r}
+table <- 
+```
+
+```{r}
+knitr::kable(table)
+```
+
+kable(head(mtcars), caption = "Table 1: Summary of mtcars data")Table 1:Data Set Information
 
 Detail | Data Set 1 | Data Set 2
 -----:|:----:|:----:
 Source| Santa Barbara Coastal Long Term Ecological Research (LTER) | Santa Barbara Coastal  Long Term Ecological Research (LTER)
-Retrieved from | https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1022.2 |https://sbclter.msi.ucsb.edu/data/catalog/package/?package=knb-lter-sbc.24
+Retrieved from | https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1022.2 |https://doi.org/10.6073/pasta/48686fef076a23310a0e48f69d76260c 
 Variables Used | Nitrogen Types, Season, Day Replicate, Time, Blade Replicate, Uptake Rate, Biomass Uptake Rate |Year, Month, Date, Nitrogen Percent
 Date | 2021 | 2002-2021
 
@@ -89,165 +98,119 @@ The data for nitrogen uptake was cleaned by renaming the column names to be bett
 
 # Exploratory Analysis 
 
-A map was created to gain a sense of location. The Map shows the sampling sites of nitrogen uptake along the coast of California.
-```{r Map, echo=FALSE, message=FALSE}
-
-# Data Exploration Part 1: Mapping the locations of the study sites
-
-# Creating a data frame of the locations
-#Site_Name <- c("Mohawk Reef", "Arroyo Quemado Reef", "Arroyo Burro Reef")
-#Longitude <- c("-119.7295", "-120.11905", "-119.7445915	")
-#Latitude <- c("34.3940708", "34.46774988", "34.400275")
-
-#Site_information <- data.frame(Site_Name, Longitude, Latitude)
-
-# Changing Site Name, Longitude, Latitude to factors and numerics
-#Site_information$Site_Name <- as.factor(Site_information$Site_Name)
-#Site_information$Longitude <- as.numeric(Site_information$Longitude)
-#Site_information$Latitude <- as.numeric(Site_information$Latitude)
+The first part of the exploratory analysis focused on the dataset from the research study conducted on giant kelp over five days. Box plots were used to explore the relationship of the variables (Nitrogen Type, Season, Length of Exposure, Day Replicate, and Blade Replicate) against nitrogen uptake rate. 
 
 
-# Converting the dataframe into a spatial reference frame
-#Surge_Reef_sf <- Site_information %>% 
- # st_as_sf(coords = c('Longitude','Latitude'),
-  #         crs=4326)
+The metadata indicates that the giant kelp blades studied were collected during the nitrate replete spring and the nitrate-deplete summer. The five replicate experiments were conducted in both spring and summer of 2019, which allows us to find potential differences in the nitrogen surge uptake of the two populations. The experimenters calculate uptake rate using a modified version of an equation by Legendre and Grosselin (1997) V= (nt - n0)/[t(ds-d0)] where nt is the atom percentage of Nitrogen-15 in the blade after incubation; n0 is the average concentration of isotope in the control blades; ds is the atom percentage of Nitrogen-15 in the seawater at the start of the incubation; d0 is the atom percentage of Nitrogen-15 in the nitrate pool before isotope tracer was added; and t is the length of the incubation time in minutes.
 
-# Making a map of the study sites
-#Surge_Reef_Map <- mapview(Surge_Reef_sf, layer.name = 'Reef Site locations')
-#Surge_Reef_Map
-```
-  
-  Boxplot text
-```{r Box Plots, echo=FALSE, message=FALSE}
+
+```{r Box Plots, echo=FALSE, message=FALSE, fig.cap="Uptake Rate by Nitrogen Type Box Plot"}
 # Data Exploration Part 2.1: Box Plots to visualize data means and quartiles
 UptakeRateBoxbyType <- ggplot(SurgeUptakeNitrogen) +
   geom_boxplot(aes(x = Nitrogen_Types, y = Uptake_Rate))+
-  labs(title="Uptake Rate (V(hr1)) by Nitrogen Type")
+  labs(title="Nitrogen Uptake Rate (V(hr1)) by Nitrogen Type", x="Nitrogen Types", y="Nitrogen Uptake Rate(V(hr1))")
 UptakeRateBoxbyType
 ggsave(file=here('Output', 'BoxDataExp','UptakeRateBoxbyType.png'), width = 10, height = 10, units = "cm")
 
-BiomassBoxbyType <- ggplot(SurgeUptakeNitrogen) +
-  geom_boxplot(aes(x = Nitrogen_Types, y = Biomass_Uptake))+
-  labs(title= "Biomass Uptake by Nitrogen Type")
-BiomassBoxbyType
-ggsave(file=here('Output','BoxDataExp', 'BiomassBoxbyType.png'), width = 10, height = 10, units = "cm")
+```
 
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Uptake Rate by Season Box Plot"}
 UptakeRateBoxbySeason <- ggplot(SurgeUptakeNitrogen) +
   geom_boxplot(aes(x = Season, y = Uptake_Rate))+
-  labs(title="Uptake Rate (V(hr1)) by Season")
+  labs(title="Nitrogen Uptake Rate (V(hr1)) by Season", y="Nitrogen Uptake Rate (V(hr1))")
 UptakeRateBoxbySeason
 ggsave(file=here('Output', 'BoxDataExp','UptakeRateBoxbySeason.png'), width = 10, height = 10, units = "cm")
+```
 
-BiomassBoxbySeason <- ggplot(SurgeUptakeNitrogen) +
-  geom_boxplot(aes(x = Season, y = Biomass_Uptake))+
-  labs(title= "Biomass Uptake by Season")
-BiomassBoxbySeason
-ggsave(file=here('Output','BoxDataExp', 'BiomassBoxbySeason.png'), width = 10, height = 10, units = "cm")
-
+```{r, echo=FALSE, message=FALSE, fig.cap="Uptake Rate byExposure Length Box Plot"}
 UptakeRateBoxbyTime <- ggplot(SurgeUptakeNitrogen) +
   geom_boxplot(aes(x = Time, y = Uptake_Rate))+
-  labs(title="Uptake Rate (V(hr1)) by Length of Exposure")
+  labs(title="Nitrogen Uptake Rate (V(hr1)) by Length of Exposure", x="Length of Exposure (minutes)", y="Nitrogen Uptake Rate (V(hr1))")
 UptakeRateBoxbyTime
 ggsave(file=here('Output','BoxDataExp', 'UptakeRateBoxbyTime.png'), width = 10, height = 10, units = "cm")
 
-BiomassBoxbyTime <- ggplot(SurgeUptakeNitrogen) +
-  geom_boxplot(aes(x = Time, y = Biomass_Uptake))+
-  labs(title= "Biomass Uptake by Length of Exposure")
-BiomassBoxbyTime
-ggsave(file=here('Output','BoxDataExp', 'BiomassBoxbyTime.png'), width = 10, height = 10, units = "cm")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Uptake Rate Day Replicate Box Plot"}
 
 UptakeRateBoxbyDayRep <- ggplot(SurgeUptakeNitrogen) +
   geom_boxplot(aes(x = Day_Replicate, y = Uptake_Rate))+
-  labs(title="Uptake Rate (V(hr1)) by Day Replicate")
+  labs(title="Nitrogen Uptake Rate (V(hr1)) by Day Replicate", x="Day Replicate", y="Nitrogen Uptake Rate Uptake Rate (V(hr1))")
+
 UptakeRateBoxbyDayRep
 ggsave(file=here('Output', 'BoxDataExp','UptakeRateBoxbyDayRep.png'), width = 10, height = 10, units = "cm")
+```
 
-BiomassBoxbyDayRep <- ggplot(SurgeUptakeNitrogen) +
-  geom_boxplot(aes(x = Day_Replicate, y = Biomass_Uptake))+
-  labs(title= "Biomass Uptake by Day Replicate")
-BiomassBoxbyDayRep
-ggsave(file=here('Output','BoxDataExp', 'BiomassBoxbyDayRep.png'), width = 10, height = 10, units = "cm")
+
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rate by Blade Replicate Box Plot"}
 
 UptakeRateBoxbyBladeRep <- ggplot(SurgeUptakeNitrogen) +
   geom_boxplot(aes(x = Blade_Replicate, y = Uptake_Rate))+
-  labs(title="Uptake Rate (V(hr1)) by Blade Replicate")
+  labs(title="Nitrogen Uptake Rate (V(hr1)) by Blade Replicate", x="Blade Replicate", y="Nitrogen Uptake Rate (V(hr1))")
 UptakeRateBoxbyBladeRep
 ggsave(file=here('Output','BoxDataExp', 'UptakeRateBoxbyBladeRep.png'), width = 10, height = 10, units = "cm")
-
-BiomassBoxbyBladeRep <- ggplot(SurgeUptakeNitrogen) +
-  geom_boxplot(aes(x = Blade_Replicate, y = Biomass_Uptake))+
-  labs(title= "Biomass Uptake by Blade Replicate")
-BiomassBoxbyBladeRep
-ggsave(file=here('Output', 'BoxDataExp','BiomassBoxbyBladeRep.png'), width = 10, height = 10, units = "cm")
 ```
+Violin plots were used to understand the density of the variables when comparing with nitrogen uptake rate. See five violin plots below. 
 
 
-Violin text
-```{r Violins, echo=FALSE, message=FALSE}
+```{r Violins, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rate by Nitrogen Types Violin Plot"}
 # Data Exploration Part 2.2: Violins to visualize range and spread of each component of the data set
 UptakeRateViolinbyType <- ggplot(SurgeUptakeNitrogen) +
   geom_violin(aes(x = Nitrogen_Types, y = Uptake_Rate))+
-  labs(title="Uptake Rate (V(hr1)) by Nitrogen Type")
+  labs(title="Nitrogen Uptake Rate (V(hr1)) by Nitrogen Type", x="Nitrogen Types", y="Nitrogen Uptake Rates (V(hr1)")
 UptakeRateViolinbyType
 ggsave(file=here('Output','ViolinDataExp', 'UptakeRateViolinbyType.png'), width = 10, height = 10, units = "cm")
 
-BiomassViolinbyType <- ggplot(SurgeUptakeNitrogen) +
-  geom_violin(aes(x = Nitrogen_Types, y = Biomass_Uptake))+
-  labs(title= "Biomass Uptake by Nitrogen Type")
-BiomassViolinbyType
-ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyType.png'), width = 10, height = 10, units = "cm")
+```
+
+
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rate by Season Violin Plot"}
 
 UptakeRateViolinbySeason <- ggplot(SurgeUptakeNitrogen) +
   geom_violin(aes(x = Season, y = Uptake_Rate))+
-  labs(title="Uptake Rate (V(hr1)) by Season")
+  labs(title="Nitrogen Uptake Rate (V(hr1)) by Season", y="Nitrogen Uptake Rates (V(hr1)", x="Season")
 UptakeRateViolinbySeason
 ggsave(file=here('Output','ViolinDataExp', 'UptakeRateViolinbySeason.png'), width = 10, height = 10, units = "cm")
+```
 
-BiomassViolinbySeason <- ggplot(SurgeUptakeNitrogen) +
-  geom_violin(aes(x = Season, y = Biomass_Uptake))+
-  labs(title= "Biomass Uptake by Season")
-BiomassViolinbySeason
-ggsave(file=here('Output','ViolinDataExp', 'BiomassViolinbySeason.png'), width = 10, height = 10, units = "cm")
+```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rate by Length of Exposure Violin Plot"}
 
 UptakeRateViolinbyTime <- ggplot(SurgeUptakeNitrogen) +
   geom_violin(aes(x = Time, y = Uptake_Rate))+
-  labs(title="Uptake Rate (V(hr1)) by Length of Exposure")
+  labs(title="Nitrogen Uptake Rate (V(hr1)) by Length of Exposure", y="Nitrogen Uptake Rate (V(hr1))", x="Length of Exposure (minutes)")
 UptakeRateViolinbyTime
 ggsave(file=here('Output', 'ViolinDataExp','UptakeRateViolinbyTime.png'), width = 10, height = 10, units = "cm")
 
-BiomassViolinbyTime <- ggplot(SurgeUptakeNitrogen) +
-  geom_violin(aes(x = Time, y = Biomass_Uptake))+
-  labs(title= "Biomass Uptake by Length of Exposure")
-BiomassViolinbyTime
-ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyTime.png'), width = 10, height = 10, units = "cm")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rate by Day Replicate Violin Plot"}
 
 UptakeRateViolinbyDayRep <- ggplot(SurgeUptakeNitrogen) +
   geom_violin(aes(x = Day_Replicate, y = Uptake_Rate))+
-  labs(title="Uptake Rate (V(hr1)) by Day Replicate")
+  labs(title="Nitrogen Uptake Rate (V(hr1)) by Day Replicate", x="Day Replicate", y="Nitrogen Uptake Rate (V(hr1))")
 UptakeRateViolinbyDayRep
 ggsave(file=here('Output', 'ViolinDataExp','UptakeRateViolinbyDayRep.png'), width = 10, height = 10, units = "cm")
+```
 
-BiomassViolinbyDayRep <- ggplot(SurgeUptakeNitrogen) +
-  geom_violin(aes(x = Day_Replicate, y = Biomass_Uptake))+
-  labs(title= "Biomass Uptake by Day Replicate")
-BiomassViolinbyDayRep
-ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyDayRep.png'), width = 10, height = 10, units = "cm")
+```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rate by Blade Replicate Violin Plot"}
 
 UptakeRateViolinbyBladeRep <- ggplot(SurgeUptakeNitrogen) +
   geom_violin(aes(x = Blade_Replicate, y = Uptake_Rate))+
-  labs(title="Uptake Rate (V(hr1)) by Blade Replicate")
+  labs(title="Nitrogen Uptake Rate (V(hr1)) by Blade Replicate", x="Blade Replicate", y="Nitrogen Uptake Rate (V(hr1))")
 UptakeRateViolinbyBladeRep
 ggsave(file=here('Output', 'ViolinDataExp','UptakeRateViolinbyBladeRep.png'), width = 10, height = 10, units = "cm")
-
-BiomassViolinbyBladeRep <- ggplot(SurgeUptakeNitrogen) +
-  geom_violin(aes(x = Blade_Replicate, y = Biomass_Uptake))+
-  labs(title= "Biomass Uptake by Blade Replicate")
-BiomassViolinbyBladeRep
-ggsave(file=here('Output', 'ViolinDataExp','BiomassViolinbyBladeRep.png'), width = 10, height = 10, units = "cm")
-
 ```
+
+
+All of the day replicates and blade replicate nitrogen uptake rates were used when comparing the variables of Season, Length of Exposure, and Nitrogen Type were studied further. From both the box plot and violin plot, nitrogen uptake was high in the first minute. Summer also had slightly more and higher nitrogen uptake rates. Ammonium also had a higher range of nitrogen uptake rates than the other two nitrogen types. All three of these variables were studied further to understand if they contributed to a significant different of nitrogen uptake rate. 
+
 \newpage
-The last part of the exploratory analysis focused on an overview of nitrogen concentration amount over the last twenty years. A summary was used on the entire data set as well as on the nitrogen concentration column to gain a general sense of what amounts were present.  
+The second part of the exploratory analysis focused on an overview of nitrogen concentration amount over the last twenty years. A summary was used on the entire data set as well as on the nitrogen concentration column to gain a general sense of what amounts were present.  
 ```{r, echo=FALSE, message=FALSE}
 #Data Exploration Part 3
 
@@ -264,6 +227,9 @@ NitrogenYears_Point <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
   geom_point(alpha=.5)+
   labs(title="Nitrogen Percent by Year", x="Date", y="Nitrogen Percent")
 
+ggsave(file=here('Output', 'ExploratoryAnalysis','NitrogenConcentrationBoxbySeason.png'), width = 10, height = 10, units = "cm")
+
+
 print(NitrogenYears_Point)
 ```
 
@@ -276,6 +242,8 @@ print(NitrogenYears_Point)
 NitrogenYears_Box <- ggplot(NitrogenYears, aes(x=NewSites, y=Nitrogen_Percent))+
   geom_boxplot()+
   labs(title="Nitrogen Percent by Site", x="Site", y="Nitrogen Percent")
+
+ggsave(file=here('Output', 'ExploratoryAnalysis','NitrogenConcentrationBoxbySite.png'), width = 10, height = 10, units = "cm")
 
 print(NitrogenYears_Box)
 ```
@@ -309,6 +277,9 @@ NitrogenPlot <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
   geom_boxplot()+
   labs(title="Nitrogen Concentration Percent by Year", x="Year", y="Nitrogen Concentration Percent")
 print(NitrogenPlot)
+
+ggsave(file=here('Output', 'Analysis','NitrogenConcentrationBoxbyDate.png'), width = 10, height = 10, units = "cm")
+
 ```
 
   
@@ -364,6 +335,9 @@ ggplot(Nitrogen.monthly, aes(x = Date, y = Mean_NitrogenPercent)) +
   geom_smooth( method = lm )
 
 print(Nitrogen_Plot)
+
+ggsave(file=here('Output', 'Analysis','NitrogenConcentrationPointbySeason.png'), width = 10, height = 10, units = "cm")
+
 
 #taking out seasonal
 NitrogenComponents <- as.data.frame(Nitrogen.monthly.ts.decomp$time.series[,1:3])
@@ -428,14 +402,14 @@ NitrogenSeasonPlot <- ggplot(NitrogenYears, aes(x=SeasonNames, y=Nitrogen_Percen
 
 print(NitrogenSeasonPlot)
 
+ggsave(file=here('Output', 'Analysis','NitrogenConcentrationBoxbySeason.png'), width = 10, height = 10, units = "cm")
+
 ```
 
 \newpage
 ## Question 3:  Does nitrogen surge uptake vary between the spring and summer seasons?
 The last three questions focus on the experiment completed over five days in the spring and summer of 2019.  Nitrogen was blasted for 45 minutes and data on nitrogen and biomass update was recorded. 
 
-
-The metadata indicates that the giant kelp blades studied were collected during the nitrate replete spring and the nitrate-deplete summer. The five replicate experiments were conducted in both spring and summer of 2019, which allows us to find potential differences in the nitrogen surge uptake of the two populations. The experimenters calculate uptake rate using a modified version of an equation by Legendre and Grosselin (1997) V= (nt - n0)/[t(ds-d0)] where nt is the atom percentage of Nitrogen-15 in the blade after incubation; n0 is the average concentration of isotope in the control blades; ds is the atom percentage of Nitrogen-15 in the seawater at the start of the incubation; d0 is the atom percentage of Nitrogen-15 in the nitrate pool before isotope tracer was added; and t is the length of the incubation time in minutes.
 
 
 H0 : There is no significant difference of nitrogen surge uptake between spring and summer seasons.
@@ -458,8 +432,8 @@ print(NitrogenSeasonBox)
 ```{r, message=FALSE, fig.cap="Nitrogen Uptake by Season Scatter Plot"}
 
 NitrogenSeasonPoint <- 
-  ggplot(SurgeUptakeNitrogen, aes(x = Day_Replicate, y = Uptake_Rate, color=Season)) +
-  geom_point(alpha=.5)+
+  ggplot(SurgeUptakeNitrogen, aes(x = Day_Replicate, y = Uptake_Rate, shape=Season)) +
+  geom_point(alpha=.3)+
   labs(title="Nitrogen Uptake Rate by Day and Season", x="Days", y="Nitrogen Uptake Rate (V(hr1))")
 
 
@@ -467,7 +441,7 @@ print(NitrogenSeasonPoint)
 #ggsave(file=here('Output', 'Analysis','NitrogenPointSeason.png'), width = 10, height = 10, units = #"cm")
 ```
 
-```{r, message=FALSE, echo=FALSE}
+```{r, message=FALSE}
 
 #linear regression
 NitrogenRegressionSeason <- lm(SurgeUptakeNitrogen$Uptake_Rate ~ SurgeUptakeNitrogen$Season)
@@ -482,15 +456,82 @@ different exposure lengths.
 HA : There is significant difference of nitrogen surge uptake between different
 exposure lengths.
 
-```{r, message=FALSE, fig.cap="Need's a name for list of figures"}
+The interaction between nitrogen uptake and season is significant because the p-value is < .05 (p = 8.394e-06). We can reject the null hypothesis and accept that there is significant difference of nitrogen surge uptake between different exposure lengths. The R-squared is .014, so a low amount of nitrogen uptake variance is in response to data being collected in the spring or summer. The box plot below shows the change in nitrogen concentration over seasons.
+
+The Tukey HSD test shows that there is significant difference between the means of time interval 1 and 45 (p=value = 0.0000068), intervals 1 and 15 (p-value=.00076), and intervals 1 and 5 (p-value = .04). There is not significant difference between the means of time interval 15 and 45 (p-value = .71), 5 and 45 (p-value = .10), and 5 and 15 (p-value = .62) because their p-value is >.05. 
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rate by Exposure Length Box Plot"}
 #can only put one plot at a time because of figure titles
+
+ExposureLength <- SurgeUptakeNitrogen %>%
+  mutate(Day_Replicate = as.factor(Day_Replicate))%>%
+  mutate(Time = as.factor(Time))
+
+
+ExposureLength$Season <-factor(SurgeUptakeNitrogen$Season, labels = c("Spring", "Summer"))
+ExposureLength$Nitrogen_Types<-factor(SurgeUptakeNitrogen$Nitrogen_Types, labels= c("Ammonium", "Nitrate", "Urea"))
+
+
+NitrogenTimeBox <- 
+  ggplot(ExposureLength, aes(x = Time, y = Uptake_Rate)) +
+  geom_boxplot()+
+  labs(title="Nitrogen Uptake Rate by Exposure Length", x="Exposure Length (minutes)", y="Nitrogen Uptake Rate (V(hr1))")
+
+print(NitrogenTimeBox)
+ggsave(file=here('Output', 'Analysis','NitrogenTimeBox.png'), width = 10, height = 10, units = "cm")
+
+
 ```
-newpage
+```{r, message=FALSE, echo=FALSE, fig.cap="Nitrogen Uptake Rate by Day Replicate Scatter Plot"}
+NitrogenTimePointbyDay <- 
+  ggplot(ExposureLength, aes(x = Day_Replicate, y = Uptake_Rate, shape=Time)) +
+  geom_point(alpha=.2)+
+  labs(title="Nitrogen Uptake Rate by Day and Exposure Length", x="Days", y="Nitrogen Uptake Rate (V(hr1))")
+
+
+print(NitrogenTimePointbyDay)
+ggsave(file=here('Output', 'Analysis','NitrogenTimePointbyDay.png'), width = 10, height = 10, units = "cm")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rates by Type with Time Scatter Plot"}
+NitrogenTimePointbyType <- 
+  ggplot(ExposureLength, aes(x = Nitrogen_Types, y = Uptake_Rate, shape=Time)) +
+ geom_point(alpha=.2)+
+ labs(title="Nitrogen Uptake Rate by Types and Exposure Length", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
+
+print(NitrogenTimePointbyType)
+ggsave(file=here('Output', 'Analysis','NitrogenTimePointbyType.png'), width = 10, height = 10, units = "cm")
+```
+
+```{r, message=FALSE}
+TimeLM <-lm(data = ExposureLength, Uptake_Rate~Time)
+summary(TimeLM)
+
+TimeAOV <- aov(data=ExposureLength, Uptake_Rate~Time)
+summary(TimeAOV)
+
+
+#TimeNitrogenAIC <- lm(data=ExposureLength, Uptake_Rate~Time+Nitrogen_Types+Season)
+#step(TimeNitrogenAIC)
+
+
+TimeDurationAOV <- aov(data=ExposureLength, Uptake_Rate~Time)
+summary(TimeDurationAOV)
+
+TukeyHSD(TimeDurationAOV)
+```
+
+
+\newpage
 ## Question 5: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
 H0 : There is no significant difference of nitrogen surge uptake of different nitrogen types.
 HA : There is significant difference of nitrogen surge uptake between different nitrogen types.
 
 The interaction between nitrogen uptake and season is significant because the p-value is < .05 (p < 2.2e-16). We can reject the null hypothesis and accept that there is significant difference of nitrogen surge uptake between spring and summer seasons.. The R-squared is .192, so a moderate amount of nitrogen uptake variance is in response to the nitrogen type being blasted. The box plot below shows the change in nitrogen uptake rate by nitrogen type.
+
+The Tukey HSD test shows that there is significant difference between the means of time interval 1 and 45 (p=value = 0.0000068), intervals 1 and 15 (p-value=.00076), and intervals 1 and 5 (p-value = .04). There is not significant difference between the means of time interval 15 and 45 (p-value = .71), 5 and 45 (p-value = .10), and 5 and 15 (p-value = .62) because their p-value is >.05.
+
 ```{r, message=FALSE, fig.cap="Nitrogen Uptake by Type Box Plot"}
 # Creating a ggplot to compare uptake of various types of nitrogen
 
@@ -505,15 +546,15 @@ ggsave(file=here('Output', 'Analysis','NitrogenUptakeBoxtype.png'), width = 10, 
 ```
 
 
-The jitter plot below shows the change in biomass uptake rate by nitrogen type with day replicate added.
+The jitter plot below shows the change in nitrogen uptake rate by nitrogen type with day replicate added.
 
 ```{r, message=FALSE, fig.cap="Nitrogen Uptake by Type Jigger Plot"}
 
 # Creating a ggplot to compare how nitrogen uptake varies per day per nitrogen type
 NitrogenDayUptake <-
-  ggplot(SurgeUptakeNitrogen, aes(x = Nitrogen_Types, y = Uptake_Rate, color = Day_Replicate)) +
-  geom_jitter(alpha = 0.2) +
-  scale_color_manual(values = c("#FF0000", "#BF003F", "#7F007F", "#3F00BF", "#0000FF"))+
+  ggplot(SurgeUptakeNitrogen, aes(x = Nitrogen_Types, y = Uptake_Rate, shape = Day_Replicate)) +
+  geom_jitter(alpha = 0.5) +
+#  scale_color_manual(values = c("#FF0000", "#BF003F", "#7F007F", "#3F00BF", #"#0000FF"))+
   labs(title="Nitrogen Uptake per Day for Each Nitrogen Type", 
        x="Nitrogen Types", 
        y="Nitrogen Uptake Rate (V(hr1))", color = "Day")
@@ -524,19 +565,29 @@ ggsave(file=here('Output', 'Analysis','NitrogenUptakeJitterType.png'), width = 1
 ```
 
 
+
 ```{r, message=FALSE}
 # Generalized Linear Model (GLM)
 NitorgenLM <-lm(data = SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types)
 summary(NitorgenLM)
 ```
+
+
 ```{r}
 # One-way ANOVA
-#NitrogenAOV <- aov(data = SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types)
-#summary(NitrogenAOV)
-#TukeyHSD(NitrogenAOV)
+NitrogenAOV <- aov(data = SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types)
+summary(NitrogenAOV)
+TukeyHSD(NitrogenAOV)
+```
+
+
+```{r}
+# One-way ANOVA
+NitrogenAOV <- aov(data = SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types)
+summary(NitrogenAOV)
+TukeyHSD(NitrogenAOV)
 
 # AIC-based Model Selection:
-
 NitrogenTypeAIC <- lm(data=SurgeUptakeNitrogen, Uptake_Rate~Nitrogen_Types+Season+Time)
 step(NitrogenTypeAIC)
 summary(NitrogenTypeAIC)
@@ -553,7 +604,7 @@ summary(NitrogenTypeAIC)
 
 Akaike information criterion (AIC) was performed for the final three questions to see if those three variables all contributed to the variation of nitrogen uptake. All three variables (season, nitrogen exposure lengths, and nitrogen type), contributed to the variance of nitrogen uptake rate. 
 
-What does these pvalues about the first data set tell us about the intro
+What does these p-values about the first data set tell us about the intro
 
 What does the second set  tell us about the intro as well as the data set (aka, more testing needs to be done, was a short experiment)
 Table 2: Significance Values
