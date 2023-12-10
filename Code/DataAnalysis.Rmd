@@ -41,7 +41,7 @@ HA : There is significant difference of nitrogen percent over the past twenty ye
 Prior to conducting this analysis, it was identified that nitrogen percent did not seem to visually change over the years. To get a better understanding of the relationship, linear regression and time series analysis was conducted.  
 ```{r Q1}
 #1. LM for year
-NitrogenRegressionYear <- lm(NitrogenYears$Nitrogen_Percent ~ NitrogenYears$Date)
+NitrogenRegressionYear <- lm(NitrogenYears$Nitrogen_Percent ~ NitrogenYears$Year)
 #Linear regression on the nitrogen percent amount by year. P-value is less than .05. Which means there is significant difference. Residual standard error is small at .75 on 1280 degrees of freedom. However, year only explains 5% of nitrogen percent amount. 
 summary(NitrogenRegressionYear)
 #Correlation
@@ -213,8 +213,8 @@ print(NitrogenSeasonBox)
 
 
 NitrogenSeasonPoint <- 
-  ggplot(SurgeUptakeNitrogen, aes(x = Day_Replicate, y = Uptake_Rate, shape=Season)) +
-  geom_point(alpha=.2)+
+  ggplot(SurgeUptakeNitrogen, aes(x = Day_Replicate, y = Uptake_Rate, color=Season)) +
+  geom_point(alpha=.5)+
   labs(title="Nitrogen Uptake Rate by Day and Season", x="Days", y="Nitrogen Uptake Rate (V(hr1))")
 
 
@@ -236,6 +236,15 @@ NitrogenSeasonBox2 <-
 
 print(NitrogenSeasonBox2)
 #ggsave(file=here('Output', 'Analysis','NitrogenSeasonBox2.png'), width = 10, height = 10, units = #"cm")
+
+
+
+#linear regression
+NitrogenRegressionSeason <- lm(SurgeUptakeNitrogen$Uptake_Rate ~ SurgeUptakeNitrogen$Season)
+
+summary(NitrogenRegressionSeason)
+
+
 ```
 ```{r Season LM}
 SurgeUptakeNitrogen$Time <- as.factor(SurgeUptakeNitrogen$Time)
@@ -251,11 +260,11 @@ NitrogenAIC <- lm(data=SurgeUptakeNitrogen, Uptake_Rate~Season+Nitrogen_Types+Ti
 step(NitrogenAIC)
 
 #really for uptake duration, not season
-DurationAOV <- aov(data=SurgeUptakeNitrogen, Uptake_Rate~Time)
-summary(DurationAOV)
+#DurationAOV <- aov(data=SurgeUptakeNitrogen, Uptake_Rate~Time)
+#summary(DurationAOV)
 
-TukeyHSD(DurationAOV)
-TukeyHSD(SeasonAOV)
+#TukeyHSD(DurationAOV)
+#TukeyHSD(SeasonAOV)
 
 #NitrogenTukey<- HSD.test(DurationAOV, "Time", group=TRUE)
 #print(NitrogenTukey)
@@ -379,6 +388,17 @@ NitrogenDayUptake <-
 print(NitrogenDayUptake)
 ggsave(file=here('Output', 'Analysis','NitrogenDayUptake.png'), width = 10, height = 10, units = "cm")
 
+```
+
+The box plot below shows the change in biomass uptake rate by nitrogen type.
+```{r, echo=FALSE, message=FALSE, fig.cap="Biomass Uptake by Type Box Plot"}
+NitrogenBiomassUptake <- 
+  ggplot(SurgeUptakeNitrogen, aes(x = Nitrogen_Types, y = Biomass_Uptake)) +
+  geom_boxplot() +
+  labs(title="Biomass Uptake Rate by Nitrogen Type", x="Nitrogen Types", y="Biomass Uptake Rate (µg/g/min)")
+print(NitrogenBiomassUptake)
+ggsave(file=here('Output', 'Analysis','NitrogenBiomassUptakeBoxNitrogenType.png'), width = 10, height = 10, units = "cm")
+```
 ```
 
 ```{r Q4 LM}
