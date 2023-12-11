@@ -46,12 +46,13 @@ Data:
   Raw: imported csv files from environmental data initiative 
   
 Output: 
-Exploratory Analysis: PNG files of time series point plots to visualize temporal data 
-    naming convention: variable measured, visualization type, variable measured against 
+Exploratory Analysis: PNG files of time series point plots to visualize temporal data naming convention: variable measured, visualization type, variable measured against 
  BoxDataExp: PNG files of box plots created to visualize variables' mean and quartiles in the data exploration component of our work
-    naming convention: variable measured, visualization type, variable measured against 
+ 
+naming convention: variable measured, visualization type, variable measured against 
   ViolinDataExp: PNG files of violin plots created to visualize variables' range and spread in the data exploration component of our work
-    naming convention: variable measured, visualization type, variable measured against
+
+naming convention: variable measured, visualization type, variable measured against
   Analysis: PNG files of box and scatter plots resulting from data visualizations produced to supplement analysis of research questions.
   naming convention: variable measured, variable measured against, visualization type 
 

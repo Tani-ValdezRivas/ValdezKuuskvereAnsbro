@@ -52,17 +52,17 @@ SurgeUptakeNitrogen$Day_Replicate <- as.factor(SurgeUptakeNitrogen$Day_Replicate
 
 # Rationale and Research Questions
 
-Kelp forests along the United States West Coast are impacted by increasing temperatures as a result of climate change. Since the late 19th century, Santa Barbara County in Southern California has had an increase in average temperature by 4.1 degrees Fahrenheit (Wilson, 2019). Kelp not only provides a healthy ecosystem for other flora and fauna but also provides ecosystem services to humans as well. Kelp assists with human-related environmental issues in two ways. First, kelp can sequester a large amount of carbon, aiding in climate change mitigation (Hurlimann, 2019). Secondly, they absorb excess nitrogen, which can lessen the impacts of agricultural runoff (Conroy, 2023).   
+Kelp forests along the United States West Coast are impacted by increasing temperatures as a result of climate change. Since the late 19th century, Santa Barbara County in Southern California has had an increase in average temperature by 4.1 degrees Fahrenheit (Wilson, 2019). Kelp not only provides a healthy ecosystem for other flora and fauna but also provides ecosystem services to humans as well. Kelp assists with human-related environmental issues in two ways. First, kelp can sequester a large amount of carbon, aiding in climate change mitigation (Hurlimann, 2019). Secondly, it absorbs excess nitrogen, which can lessen the impacts of agricultural runoff (Conroy, 2023).   
 
 A recent study has shown that increased nitrogen uptake by kelp can limit the effect that heat has on giant kelp. This is an interesting development because nitrogen and eutrophication are generally seen as negative consequences of human interference. However, in this case, it could assist kelp and help them survive increased climate-change-related temperature increases (Fernández, 2020).
 
-Interested in this recent research, data about nitrogen concentration amount and uptake were located in the Long-Term Ecological Research database titled “SBC LTER: Reef: Surge uptake capability in Macrocystis pyrifera in response to pulses of three different forms of nitrogen” (Cedeno, 2021) and ” SBC LTER: Reef: Macrocystis pyrifera CHN content (carbon, hydrogen, nitrogen), ongoing since 2002” (Santa Barbara, 2021). This data looked simple enough to clean and manipulate, while also providing enough information for a research project. 
+Interested in this recent research, data about nitrogen concentration amount and uptake were located in the Long-Term Ecological Research database titled "SBC LTER: Reef: Surge uptake capability in Macrocystis pyrifera in response to pulses of three different forms of nitrogen" (Cedeno, 2021) and "SBC LTER: Reef: Macrocystis pyrifera CHN content (carbon, hydrogen, nitrogen), ongoing since 2002" (Santa Barbara, 2021). This data looked simple enough to clean and manipulate, while also providing enough information for a research project. 
 
-We are interested in trends in giant kelp nitrogen concentration amount and nitrogen surge uptake. Specific questions include:
-1.	Has nitrogen concentration in kelp changed over the years (2002-2021)?
-2.	Does giant kelp nitrogen concentration amount vary by season?
-3.	Does nitrogen surge uptake vary between the spring and summer seasons?
-4.	Does giant kelp nitrogen surge uptake vary based on the amount of exposure?
+We are interested in trends in giant kelp nitrogen concentration amount and nitrogen surge uptake. Specific questions include:  
+1.	Has nitrogen concentration in kelp changed over the years (2002-2021)?  
+2.	Does giant kelp nitrogen concentration amount vary by season?  
+3.	Does nitrogen surge uptake vary between the spring and summer seasons?  
+4.	Does giant kelp nitrogen surge uptake vary based on the amount of exposure?  
 5.	Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
 
 Github Information: https://github.com/Tani-ValdezRivas/ValdezKuuskvereAnsbro
@@ -72,21 +72,21 @@ Github Information: https://github.com/Tani-ValdezRivas/ValdezKuuskvereAnsbro
 
 # Dataset Information
 
-Data sets were found on the Environmental Data Initiative. All sets were from the Santa Barbara Coastal Long Term Ecological Research Site (SBC LTER) which is based  within the University of California, Santa Barbara (UCSB) Marine Science Institute, and is part of the National Science Foundation's LTER Network. 
+Data sets were found on the Environmental Data Initiative. All sets are from the Santa Barbara Coastal Long Term Ecological Research Site (SBC LTER) which is based  within the University of California, Santa Barbara (UCSB) Marine Science Institute, and is part of the National Science Foundation's LTER Network. 
 
-The first data set focuses on one experiment done that examines nitrogen and biomass uptake by kelp during timed nitrogen blasting.  The first data set was used to determine if nitrogen uptake varies by time (minutes), season, or nitrogen type. The second data set has dates and percent nitrogen of kelp over almost a twenty year period. This second data set was used to gain a general sense of nitrogen found in kelp in Santa Barbara, CA and to see if that has changed over time.
+The first data set focuses on one experiment done that examines nitrogen and biomass uptake by kelp during timed nitrogen blasting. The first data set was used to determine if nitrogen uptake varies by time (minutes), season, or nitrogen type. The second data set has nitrogen concentrations of kelp over almost a twenty year period at the same three sites studied in the first data set. This second data set was used to gain a general sense of nitrogen found in kelp in Santa Barbara, CA and to see if that has changed over time.
 
 
 Table:Data Set Information
 
 Detail | Data Set 1 | Data Set 2
------:|:----:|:----:
+:-----:|:----:|:----:
 Source| Santa Barbara Coastal Long Term Ecological Research (LTER) | Santa Barbara Coastal  Long Term Ecological Research (LTER)
 Retrieved from | https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1022.2 |https://doi.org/10.6073/pasta/48686fef076a23310a0e48f69d76260c 
 Variables Used | Nitrogen Types, Season, Day Replicate, Time, Blade Replicate, Uptake Rate, Biomass Uptake Rate |Year, Month, Date, Nitrogen Percent
 Date | 2021 | 2002-2021
 
-The data for nitrogen uptake was cleaned by renaming the column names to be better understood by the public. Multiple columns including columns for Blade Replicate, Day Replicate, Time, Season, and Nitrogen Type were changed to factors. Season and Nitrogen Type also had labels added to capitalize the names of seasons and nitrogen types.Data cleaning for the second data set entailed renaming column names as well. Date was changed from a factor to a date data type. Sites with missing values were also removed. 
+The data for nitrogen uptake was cleaned by renaming the column names to make them more legible. Multiple columns including columns for Blade Replicate, Day Replicate, Time, Season, and Nitrogen Type were changed to factors. Season and Nitrogen Type also had labels added to capitalize the names of seasons and nitrogen types. Data cleaning for the second data set entailed renaming column names as well. Date was changed from a factor to a date data type. Sites with missing values were also removed. 
 
 \newpage
 
@@ -95,12 +95,12 @@ The data for nitrogen uptake was cleaned by renaming the column names to be bett
 ## Exploratory Analysis Nitrogen Uptake Dataset
 
 
-The first part of the exploratory analysis focused on the dataset from the research study conducted on giant kelp over five days. Box plots were used to explore the relationship of the variables (Nitrogen Type, Season, Length of Exposure, Day Replicate, and Blade Replicate) against nitrogen uptake rate. 
+The first part of the exploratory analysis focused on the data set from the research study conducted on giant kelp over five days. Box plots were used to explore the relationship of the variables (Nitrogen Type, Season, Length of Exposure, Day Replicate, and Blade Replicate) against nitrogen uptake rate. 
 
 
-The metadata indicates that the giant kelp blades studied were collected during the nitrate replete spring and the nitrate-deplete summer. The five replicate experiments were conducted in both spring and summer of 2019, which allows us to find potential differences in the nitrogen surge uptake of the two populations. The experimenters calculate uptake rate using a modified version of an equation by Legendre and Grosselin (1997) V= (nt - n0)/[t(ds-d0)] where nt is the atom percentage of Nitrogen-15 in the blade after incubation; n0 is the average concentration of isotope in the control blades; ds is the atom percentage of Nitrogen-15 in the seawater at the start of the incubation; d0 is the atom percentage of Nitrogen-15 in the nitrate pool before isotope tracer was added; and t is the length of the incubation time in minutes.
+The metadata indicates that the giant kelp blades studied were collected during the nitrate-replete spring and the nitrate-deplete summer. The five replicate experiments were conducted in both spring and summer of 2019, which allows us to find potential differences in the nitrogen surge uptake of the two populations. The experimenters calculate uptake rate using a modified version of an equation by Legendre and Grosselin (1997) V= (nt - n0)/[t(ds-d0)] where nt is the atom percentage of Nitrogen-15 in the blade after incubation; n0 is the average concentration of isotope in the control blades; ds is the atom percentage of Nitrogen-15 in the seawater at the start of the incubation; d0 is the atom percentage of Nitrogen-15 in the nitrate pool before isotope tracer was added; and t is the length of the incubation time in minutes.
 
-All of the day replicates and blade replicate nitrogen uptake rates were used when comparing the variables of Season, Length of Exposure, and Nitrogen Type were studied further. From both the box plot and violin plot, nitrogen uptake was high in the first minute. Summer also had slightly more and higher nitrogen uptake rates. Ammonium also had a higher range of nitrogen uptake rates than the other two nitrogen types. All three of these variables were studied further to understand if they contributed to a significant different in nitrogen uptake rate. 
+From this initial analysis, it was gathered from both the box and violin length of exposure plots, that nitrogen uptake was high in the first minute. Summer also had slightly more and higher nitrogen uptake rates when compared with spring. In addition, ammonium had a higher range of nitrogen uptake rates than the other two nitrogen types. All three of these variables were studied further to understand if they contributed to a significant difference in nitrogen uptake rate. For the Analysis Section, all of the day and blade replicate nitrogen uptake rates were used when comparing the variables of Season, Length of Exposure, and Nitrogen Types. 
 
 
 
@@ -160,7 +160,7 @@ ggsave(file=here('Output','BoxDataExp', 'UptakeRateBoxbyBladeRep.png'), width = 
 \newpage
 
   
-Violin plots were used to understand the density of the variables when comparing with nitrogen uptake rate. See five violin plots below. 
+Violin plots were used to understand the density of the variables when compared with nitrogen uptake rate. See five violin plots below. 
 
 
 ```{r Violins, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rate by Nitrogen Types Violin Plot"}
@@ -218,7 +218,7 @@ ggsave(file=here('Output', 'ViolinDataExp','UptakeRateViolinbyBladeRep.png'), wi
 ## Exploratory Analysis Nitrogen Concentration Dataset
 
 
-The second part of the exploratory analysis focused on an overview of nitrogen concentration amount over the last twenty years. A summary was used on the entire data set as well as on the nitrogen concentration column to gain a general sense of what amounts were present.  
+The second part of the exploratory analysis focused on an overview of giant kelp nitrogen concentration amount over the last twenty years. A summary was used on the entire data set as well as on the nitrogen concentration column to gain a general sense of what amounts were present.  
 ```{r, echo=FALSE, message=FALSE}
 #Data Exploration Part 3
 
@@ -233,7 +233,7 @@ A scatter plot was used to visualize the relationship between year and nitrogen 
 
 ```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Concentration per Year Scatter Plot"}
 NitrogenYears_Point <- ggplot(NitrogenYears, aes(x=Year, y=Nitrogen_Percent))+
-  geom_point(alpha=.5)+
+  geom_point(alpha=.35)+
   labs(title="Nitrogen Concentration Percent by Year", x="Date", y="Nitrogen Concentration Percent")
 
 ggsave(file=here('Output', 'ExploratoryAnalysis','NitrogenConcentrationScatterbySeason.png'), width = 10, height = 10, units = "cm")
@@ -243,7 +243,7 @@ print(NitrogenYears_Point)
 ```
 
 \newpage
-Lastly, a box plot, see below, was used to visualize the relationship between sites and nitrogen concentration. Looking at this data, it appeared concentration amount was not too different by site. Looking at the scatter plot for year, it looked like nitrogen decreased slightly. This was then explored further in the Data Analysis section.
+Lastly, a box plot, see below, was used to visualize the relationship between sites and nitrogen concentration. Looking at this data, it appeared concentration amount was not too different by site. Looking at the scatter plot for year, it looked like nitrogen decreased slightly. This was explored further in the Analysis section.
 
 ```{r, echo=FALSE, message=FALSE, fig.cap="Exploratory Analysis for Nitrogen Concentration by Site"}
 #Data Exploration Part 3
@@ -264,12 +264,12 @@ print(NitrogenYears_Box)
 
 ## Question 1: Does giant kelp nitrogen percent vary over year or season?
 
-For the first question, we wanted to understand the relationship between nitrogen concentration and time. Linear regression and normal distribution tests were run for both the year and the specific date of collection. The box plot below shows the nitrogen concentrations over the years, starting with 2002. 
+For the first question, we wanted to understand the relationship between nitrogen concentration and time. Linear regression and normal distribution tests were run for the specific date of collection. The box plot below shows the nitrogen concentrations over the years, starting with 2002. 
 
 H0 : There is no significant difference of nitrogen percent over the past twenty years.  
 HA : There is significant difference of nitrogen percent over the past twenty years.
 
-The interaction between nitrogen concentration and year is significant (p < 2.2e-16). The interaction between nitrogen concentration and collection date is significant (p < 0.001). We can reject the null hypothesis and accept that there is significant difference of nitrogen percent from 2002 to 2021. The R-squared is .974, so a high amount of nitrogen concentration variance is in response to date change. Below is a box plot showing change in nitrogen concentration over time.
+The interaction between nitrogen concentration and year is significant (p < 2.2e-16). We can reject the null hypothesis and accept that there is significant difference of nitrogen percent from 2002 to 2021. The R-squared is .974, so a high amount of nitrogen concentration variance is in response to date change. Below is a box plot showing change in nitrogen concentration over time.
 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE}
@@ -405,6 +405,17 @@ summary(NitrogenRegressionSeason)
 
 ```
   
+  
+```{r, echo=FALSE, message=FALSE,fig.cap="Nitrogen Concentration over Seasons"}
+NitrogenSeasonPlot <- ggplot(NitrogenYears, aes(x=SeasonNames, y=Nitrogen_Percent))+
+  geom_boxplot()+
+  labs(title="Nitrogen Concentration Percent by Season", x="Season", y="Nitrogen Concentration Percent")
+
+print(NitrogenSeasonPlot)
+
+ggsave(file=here('Output', 'Analysis','NitrogenConcentrationBoxbySeason.png'), width = 10, height = 10, units = "cm")
+
+```
 \newpage
 Below are the normal distribution residuals charts for the linear regression of nitrogen concentration by season.  
 
@@ -417,28 +428,18 @@ par(mfrow = c(1,1))
 
 ```
 
-```{r, echo=FALSE, message=FALSE,fig.cap="Nitrogen Concentration over Seasons"}
-NitrogenSeasonPlot <- ggplot(NitrogenYears, aes(x=SeasonNames, y=Nitrogen_Percent))+
-  geom_boxplot()+
-  labs(title="Nitrogen Concentration Percent by Season", x="Season", y="Nitrogen Concentration Percent")
 
-print(NitrogenSeasonPlot)
-
-ggsave(file=here('Output', 'Analysis','NitrogenConcentrationBoxbySeason.png'), width = 10, height = 10, units = "cm")
-
-```
 
 \newpage
 ## Question 3:  Does nitrogen surge uptake vary between the spring and summer seasons?
-The last three questions focus on the experiment completed over five days in the spring and summer of 2019.  Nitrogen was blasted for 45 minutes and data on nitrogen and biomass update was recorded. 
-
+The last three questions focus on the nitrogen uptake experiment completed over five days in the spring and summer of 2019 (“SBC LTER: Reef: Surge uptake capability in Macrocystis pyrifera in response to pulses of three different forms of nitrogen”).
 
 H0 : There is no significant difference of nitrogen surge uptake between spring and summer seasons.  
 HA : There is significant difference of nitrogen surge uptake between spring and summer seasons.
 
-The interaction between nitrogen uptake and season is significant because the p-value is < .05 (p < .0216). We can reject the null hypothesis and accept that there is significant difference of nitrogen surge uptake between spring and summer seasons.. The R-squared is .014, so a low amount of nitrogen uptake variance is in response to data being collected in the spring or summer. The box plot below shows the change in nitrogen concentration over seasons.
+The interaction between nitrogen uptake and season is significant because the p-value is < .05 (p < .0216). We can reject the null hypothesis and accept that there is significant difference of nitrogen surge uptake between spring and summer seasons. The R-squared is .014, so a low amount of nitrogen uptake variance is in response to data being collected in the spring or summer. The Tukey HSD test shows that there is significant difference between the means of seasons because their p-value is < .05 (p-value = 0.026).
 
-The Tukey HSD test shows that there is significant difference between the means of seasons because their p-value is < .05 (p-value = 0.026).
+The box plot below shows the change in nitrogen concentration over seasons.
 
 ```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rate by Season Box Plot"}
 NitrogenSeasonBox <- 
@@ -458,7 +459,7 @@ The scatter plot below shows the change in nitrogen concentration over seasons b
 
 NitrogenSeasonPoint <- 
   ggplot(SurgeUptakeNitrogen, aes(x = Day_Replicate, y = Uptake_Rate, shape=Season)) +
-  geom_point(alpha=.3)+
+  geom_point(alpha=.35)+
   labs(title="Nitrogen Uptake Rate by Day and Season", x="Days", y="Nitrogen Uptake Rate (V(hr1))")
 
 
@@ -487,7 +488,7 @@ different exposure lengths.
 HA : There is significant difference of nitrogen surge uptake between different
 exposure lengths.
 
-The interaction between nitrogen uptake and season is significant because the p-value is < .05 (p = 8.394e-06). We can reject the null hypothesis and accept that there is significant difference of nitrogen surge uptake between different exposure lengths. The R-squared is .014, so a low amount of nitrogen uptake variance is in response to data being collected in the spring or summer. The box plot below shows the change in nitrogen concentration over seasons.
+The interaction between nitrogen uptake and season is significant because the p-value is < .05 (p = 8.394e-06). We can reject the null hypothesis and accept that there is significant difference of nitrogen surge uptake between different exposure lengths. The box plot below shows the change in nitrogen concentration over length of exposure.
 
 The Tukey HSD test shows that there is significant difference between the means of time interval 1 and 45 (p=value = 0.0000068), intervals 1 and 15 (p-value=.00076), and intervals 1 and 5 (p-value = .04). There is not significant difference between the means of time interval 15 and 45 (p-value = .71), 5 and 45 (p-value = .10), and 5 and 15 (p-value = .62) because their p-value is >.05. 
 
@@ -518,7 +519,7 @@ ggsave(file=here('Output', 'Analysis','NitrogenTimeBox.png'), width = 10, height
 ```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rate by Day Replicate Scatter Plot"}
 NitrogenTimePointbyDay <- 
   ggplot(ExposureLength, aes(x = Day_Replicate, y = Uptake_Rate, shape=Time)) +
-  geom_point(alpha=.2)+
+  geom_point(alpha=.35)+
   labs(title="Nitrogen Uptake Rate by Day and Exposure Length", x="Days", y="Nitrogen Uptake Rate (V(hr1))")
 
 
@@ -530,7 +531,7 @@ ggsave(file=here('Output', 'Analysis','NitrogenTimePointbyDay.png'), width = 10,
 ```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake Rates by Type with Time Scatter Plot"}
 NitrogenTimePointbyType <- 
   ggplot(ExposureLength, aes(x = Nitrogen_Types, y = Uptake_Rate, shape=Time)) +
- geom_point(alpha=.2)+
+ geom_point(alpha=.35)+
  labs(title="Nitrogen Uptake Rate by Types and Exposure Length", x="Nitrogen Types", y="Nitrogen Uptake Rate (V(hr1))")
 
 print(NitrogenTimePointbyType)
@@ -557,13 +558,14 @@ TukeyHSD(TimeDurationAOV)
 
 
 \newpage
-## Question 5: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?
+## Question 5: Does uptake vary by type of nitrogen (ammonium, nitrate, and urea)?  
+
 H0 : There is no significant difference of nitrogen surge uptake of different nitrogen types.  
 HA : There is significant difference of nitrogen surge uptake between different nitrogen types.
 
-The interaction between nitrogen uptake and season is significant because the p-value is < .05 (p < 2.2e-16). We can reject the null hypothesis and accept that there is significant difference of nitrogen surge uptake between spring and summer seasons.. The R-squared is .192, so a moderate amount of nitrogen uptake variance is in response to the nitrogen type being blasted. The box plot below shows the change in nitrogen uptake rate by nitrogen type.
+The interaction between nitrogen uptake and season is significant because the p-value is < .05 (p < 2.2e-16). We can reject the null hypothesis and accept that there is significant difference of nitrogen surge uptake between nitrogen types. The R-squared is .192, so a moderate amount of nitrogen uptake variance is in response to the nitrogen type being blasted. The Tukey HSD test shows that there is significant difference between the means of nitrogen types because their p-value is < .05. Specifically Nitrate and Ammonium (p-value < 0.1e-7), Urea and Ammonium (p-value < p-value < 0.1e-7), and Urea and Nitrate (p-value = 0.0038).
 
-The Tukey HSD test shows that there is significant difference between the means of nitrogen types because their p-value is < .05. Specifically Nitrate and Ammonium (p-value < 0.1e-7), Urea and Ammonium (p-value < p-value < 0.1e-7), and Urea and Nitrate (p-value = 0.0038).
+The box plot below shows the change in nitrogen uptake rate by nitrogen type.
 
 ```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Uptake by Type Box Plot"}
 # Creating a ggplot to compare uptake of various types of nitrogen
@@ -636,13 +638,11 @@ summary(NitrogenTypeAIC)
 
 # Summary and Conclusions
 
-#Summary for Nitrogen Concentration Dataset
 
-From the Nitrogen Concentration Data set, Question 1, it is apparent that nitrogen concentration is decreasing over the last twenty years. From Question 2, seasons also play a role in the variance of nitrogen concentration. This is important information because nitrogen is an important nutrient for kelp. The effect of decreased nitrogen concentration found in giant kelp, could exacerbate the decrease of kelp found in Santa Barbara, California. The effect of seasonality of nitrogen concentration could point to upwelling cycles that bring cold, nutrient rich waters to the California coast during the colder weather as nitrogen concentration increases in the spring, and decreases over the summer and fall as the upwelling cycle ends. Understanding this cycle could be important to understanding how accessible nitrogen will be for kelp moving forward. The significance values in the table below show that both date and seaon affect the variance of nitrogen, and both question 1 and 2 null hypothesis can be rejected. 
+From the Nitrogen Concentration Data set, Question 1, it is apparent that nitrogen concentration is decreasing over the last twenty years. From Question 2, seasons also play a role in the variance of nitrogen concentration. This is important information because nitrogen is an important nutrient for kelp. The effect of decreased nitrogen concentration found in giant kelp, could exacerbate the decrease of kelp health in Santa Barbara, California. The effect of seasonality of nitrogen concentration could point to upwelling cycles that bring cold, nutrient rich waters to the California coast during the colder weather, as nitrogen concentration increases in the spring, and decreases over the summer and fall as the upwelling cycle ends. Understanding this cycle could be important to understanding how accessible nitrogen will be for kelp moving forward. The significance values in the table below show that both date and season affect the variance of nitrogen, and both Question 1 and 2 null hypotheses can be rejected. 
 
-#Summary for Nitrogen Uptake Dataset
 
-From the Nitrogen Uptake Dataset it is apparent that season of collection, length of exposure, and type of nitrogen being blasted all had a significant relationship with the amount of nitrogen uptake for giant kelp in this experiment. Akaike information criterion (AIC) was performed for the final three questions to see if those three variables all contributed to the variation of nitrogen uptake. All three variables (season, nitrogen exposure lengths, and nitrogen type), contributed to the variance of nitrogen uptake rate. The significance values in the table below show that season, length of exposure, and nitrogen type affect the variance of nitrogen, and question 3, 4, and 5 null hypotheses can be rejected. This study is important because it points to multiple variables affecting the amount of nitrogen that is taken in by kelp. Further studies should be completed to understand how significant of a relationship these variables factor. In addition, longer term studies could help enlighten researchers further, as this study was only completed in 2019 over a five day period. It is important research for understanding of nitrogen it absorbed by kelp, which is important as temperatures increase. This research should be elucidated further in light of recent research showing that kelp can better remain healthy in higher temperatures if they have proper access to nitrogen (Fernández, 2020). 
+From the Nitrogen Uptake Data set, it is apparent that season of collection, length of exposure, and type of nitrogen being blasted all had a significant relationship with the amount of nitrogen uptake for giant kelp. Akaike information criterion (AIC) was performed for the final three questions to see if those three variables all contributed to the variation of nitrogen uptake. All three variables (season, nitrogen exposure lengths, and nitrogen type), contributed to the variance of nitrogen uptake rate. The significance values in the table below show that season, length of exposure, and nitrogen type affect the variance of nitrogen, and Question 3, 4, and 5 null hypotheses can be rejected. This study is important because it points to multiple variables affecting the amount of nitrogen that is taken in by kelp. Further studies should be completed to understand how significant of a relationship these variables factor. In addition, longer term studies could help enlighten researchers further, as this study was only completed in 2019 over a five day period in the spring andd summer. It is important research for understanding kelp nitrogen absorption, which is important as temperatures increase. This research should be studied further in light of recent research showing that kelp can better remain healthy in higher temperatures if they have proper access to nitrogen (Fernández, 2020). 
 
 
 Table:Significance Values
