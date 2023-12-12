@@ -381,7 +381,10 @@ For the second question, we wanted to know the relationship between nitrogen con
 H0 : There is no significant difference of nitrogen concentration by season.  
 HA : There is significant difference of nitrogen concentration by season.
 
-The interaction between nitrogen concentration and season is significant because the p-value is < .05  (p < 2.2e-16). We can reject the null hypothesis and accept that there is significant difference of nitrogen concentration by season.The box plot below shows the change in nitrogen concentration over seasons.
+The interaction between nitrogen concentration and season is significant because the p-value is < .05  (p < 2.2e-16). We can reject the null hypothesis and accept that there is significant difference of nitrogen concentration by season. The box plot below shows the change in nitrogen concentration over seasons.  
+
+\newpage
+
 ```{r, message=FALSE, include=FALSE}
 NitrogenYears$Month <- factor(NitrogenYears$Month, levels = c(1,2,3,4,5,6,7,8,9,10,11,12),labels =c(  
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",  
@@ -405,8 +408,7 @@ summary(NitrogenRegressionSeason)
 
 ```
   
-  
-```{r, echo=FALSE, message=FALSE,fig.cap="Nitrogen Concentration over Seasons"}
+```{r, echo=FALSE, message=FALSE, fig.cap="Nitrogen Concentration by Season"}
 NitrogenSeasonPlot <- ggplot(NitrogenYears, aes(x=SeasonNames, y=Nitrogen_Percent))+
   geom_boxplot()+
   labs(title="Nitrogen Concentration Percent by Season", x="Season", y="Nitrogen Concentration Percent")
